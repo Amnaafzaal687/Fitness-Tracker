@@ -1,0 +1,143 @@
+<style>
+    /* Reset and General Styling */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Roboto, sans-serif;
+    }
+    body {
+        background-color: #f5f5f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        flex-direction: column;
+    }
+
+    /* Header Styling */
+    header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 50px;
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+    }
+    .logo {
+        display: flex;
+        align-items: center;
+    }
+    .logo img {
+        height: 50px;
+        margin-right: 10px;
+    }
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    nav a {
+        font-size: 16px;
+        margin: 0 15px;
+        text-decoration: none;
+        color: black;
+        font-weight: 400;
+        border: 1px solid rgb(129, 117, 117);
+        border-radius: 7px;
+        padding: 5px 10px;
+    }
+    nav a:hover {
+        color: #2046cf;
+    }
+
+    /* Success Message Styling */
+    .success-container {
+        margin-top: 10px; /* Offset to account for fixed header */
+        width: 900px;
+        max-width: 100%;
+        background-color: #CCE5E3;
+        padding: 50px;
+        text-align: center;
+        border-radius: 8px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .success-container h1 {
+        font-size: 28px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    .success-container .icon {
+        width: 60px;
+        height: 60px;
+        border: #333;
+        background-color: #CCE5E3; 
+        color: #333; /* Checkmark color */
+        border-radius: 70%; /* Makes it a circle */
+        border-color:#333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        margin: 0 auto 35px; /* Centered and with space below */
+        border: 3px solid #333;
+    }
+    .button-group {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+    }
+    .button-group a {
+        text-decoration: none;
+        padding: 10px 20px;
+        background-color: #333;
+        color: white;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+    .button-group a:hover {
+        background-color: #555;
+    }
+</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Successful Workout Logged</title>
+ 
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <img src="/logo.png" alt="FitStride Logo">
+            <nav>
+                <a href="/dashboard">Home</a>
+                <a href="/suggestedplan">Suggested Plan</a>
+                <a href="/logaworkoutsession">Log a Workout Session</a>
+                <a href="/logdailyactivity">Log Daily Activity</a>
+                <a href="/progress">Progress</a>
+                <a href="/history">History</a>
+                <a href="/fitnessgoals">Fitness Goals</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Success Message Section -->
+    <div class="success-container">
+        <div class="icon">✔</div>
+        <h1>Workout Logged Successfully!</h1>
+        <div class="button-group">
+            <a href="/progress">View Progress</a>
+            <a href="/history">View History</a>
+        </div>
+    </div>
+</body>
+</html>

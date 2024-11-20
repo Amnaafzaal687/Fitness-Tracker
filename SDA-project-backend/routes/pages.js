@@ -1,0 +1,60 @@
+const express = require('express');
+const router = express.Router();
+router.get("/",(req,res)=>{
+    res.render("home")
+});
+router.get("/login",(req,res)=>{
+    res.render("login")
+});
+router.get("/signup",(req,res)=>{
+    res.render("signup")
+});
+router.get("/contact",(req,res)=>{
+    res.render("contact")
+});
+router.get("/dashboard",(req,res)=>{
+    res.render("dashboard")
+});
+router.get("/createprofile",(req,res)=>{
+    res.render("createprofile")
+});
+router.get("/updateprofile",(req,res)=>{
+    res.render("updateprofile")
+});
+router.get("/progress",(req,res)=>{
+    res.render("progress")
+});
+router.get("/history",(req,res)=>{
+    res.render("history")
+});
+router.get("/fitnessgoals",(req,res)=>{
+    res.render("fitnessgoals")
+});
+router.get("/successful",(req,res)=>{
+    res.render("successful")
+});
+router.get("/logaworkoutsession",(req,res)=>{
+    res.render("logaworkoutsession")
+});
+router.get("/logdailyactivity",(req,res)=>{
+    res.render("logdailyactivity")
+});
+router.get("/forget",(req,res)=>{
+    res.render("forget")
+});
+router.get("/suggestedplan",(req,res)=>{
+    res.render("suggestedplan")
+});
+router.get("/suggestedplan1",(req,res)=>{
+    res.render("suggestedplan1")
+});
+router.get("/suggestedplan2",(req,res)=>{
+    res.render("suggestedplan2")
+});
+router.get("/suggestedplan3",(req,res)=>{
+    res.render("suggestedplan3")
+});
+router.get("/suggestedplan4",(req,res)=>{
+    res.render("suggestedplan4")
+});
+module.exports = router;

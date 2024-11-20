@@ -1,0 +1,210 @@
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body, .page {
+        width: 100%;
+        height: 100%;
+        background-color: #FFFFFF;
+        font-family: Roboto, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0;
+    }
+    
+    header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 50px;
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+    }
+    
+    header .logo {
+        display: flex;
+        align-items: center;
+    }
+    
+    header .logo img {
+        height: 50px;
+        margin-right: 10px;
+    }
+    
+    header nav {
+        display: flex;
+        gap: 20px;
+    }
+    header nav a {
+        font-size: 18px;
+        text-decoration: none;
+        color: black;
+        font-weight: normal;
+        display: inline-block;
+        
+    }
+    
+    header nav a:hover {
+        color: #2046cf; 
+    }
+    
+    /* Welcome Message */
+    .welcome-message {
+        width: 100%;
+        text-align: center;
+        font-size: 25px;
+        margin: 100px 0 20px 0; /* Adjusted margin to make space for fixed header */
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.6);
+    }
+    
+    /* Main Content Section */
+    .main-content {
+        display: flex;
+        align-items: flex-start;
+        margin-top: 20px;
+        gap: 20px;
+        padding: 0 50px;
+    }
+    
+    .login-image {
+        width: 360px;
+        height: 352px;
+        margin-right: 20px;
+        padding: 30px;
+    }
+    
+    .login-frame {
+        width: 400px;
+        padding: 30px 20px 50px;
+        background-color: #CCE5E3;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .login-frame h3 {
+        font-size: 16px;
+        font-weight: 500;
+        align-self: flex-start;
+    }
+    
+    .input-email, .input-password {
+        width: 100%;
+        height: 45px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        color: #555;
+    }
+    .form-section button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 20px;
+        background-color: #333;
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    .signup-text {
+        font-size: 16px;
+        text-align: center;
+    }
+    
+    .forget-link {
+        color: blue;
+        text-decoration: none;
+        font-size: 15px;
+        padding-top: 10px;
+        padding: 10px 5px;
+    }
+    
+    .signup-link {
+        color: blue;
+        text-decoration: underline;
+        font-size: 16px;
+        margin-left: 5px;
+    } 
+    .message-container {
+    margin-bottom: 20px;
+    text-align: center;
+    }
+
+    .error-message {
+        color: red;
+        font-size: 18px;
+        font-weight: bold;
+        margin: 10px 0;
+        padding: 10px;
+        background-color: #ffe6e6; /* Light red background */
+        border: 1px solid red;    /* Red border */
+        border-radius: 5px;
+    }
+</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - FitStride</title>
+</head>
+<body>
+        <!-- Header Section -->
+    <header class="header">
+        <div class="logo">
+            <img src="/logo.png" alt="Logo" class="logo">
+            <nav>
+                <a href="/">Home</a>
+                <a href="/contact">Contact</a>
+                <a href="/createprofile">Create Profile</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <!-- Welcome Message -->
+        <div class="welcome-message">
+            Welcome, Please login
+        </div>
+        <!-- Main Content Section -->
+        <section class="main-content">
+            <div>
+                <img src="/login.png" alt="Login Image" class="login-image">
+            </div>
+            <div class="login-frame">
+                <!-- Check for message -->
+                {{#if message}}
+                    <div class="message-container">
+                        <h4 class="error-message">{{message}}</h4>
+                    </div>
+                {{/if}}
+                <form action="/auth/login" method="POST">
+                    <label for="email">Email</label>
+                    <input type="email" placeholder="ex. someone@gmail.com" class="input-email" id = "email" name ="email" required>    
+                    <label for="password">Password</label>
+                    <input type="password" placeholder="Enter password" class="input-password" id = "password" name ="password" required>
+                    <a href="/forget" class="forget-link">Forget Password?</a>
+                    <div class="form-section">
+                        <button type="submit">Login</button>
+                    </div>
+                </form>
+                <p class="signup-text">Don’t have an account? <a href="/signup" class="signup-link">Sign Up</a></p>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

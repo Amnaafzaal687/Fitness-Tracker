@@ -1,0 +1,209 @@
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Roboto, sans-serif;
+    }
+    
+    body {
+        background-color: white;
+    }
+    
+    header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 50px;
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+    }
+    
+    header .logo {
+        display: flex;
+        align-items: center;
+    }
+    
+    header .logo img {
+        height: 50px;
+        margin-right: 10px;
+    }
+    
+    header nav a {
+        font-size:18px;
+        margin: 80px 15px;
+        text-decoration: none;
+        color: black;
+        font-weight: regular;
+    }
+    header nav a:hover {
+        color: #2046cf; 
+    }
+    .welcome-message {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .welcome-message h1{
+        font-size: 24px;
+        color: rgba(0, 0, 0, 0.6);
+        font-weight: regular;
+    }
+    
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        padding-top: 100px; /* Add space between header and main content */
+    }
+    
+    .signup-container {
+        display: flex;
+        max-width: 900px;
+        background-color: white;
+        border-radius: 0px;
+        overflow: hidden;
+    }
+    
+    .form-section {
+        padding: 60px;
+        background-color: #CCE5E3;
+        width: 100%;
+        margin-right: 40px;
+        border-radius: 20px;
+    }
+    
+    .form-section h2 {
+        margin-bottom: 20px;
+        color: #333;
+    }
+    
+    .form-section form label {
+        display: block;
+        margin: 15px 0 5px;
+        color: #555;
+    }
+    
+    .form-section form input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    
+    .form-section button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        background-color: #333;
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    .form-section p {
+        margin-top: 20px;
+        text-align: center;
+    }
+    
+    .form-section p a {
+        color: #0073e6;
+        text-decoration: underline;
+    }
+    
+    .image-section {
+     width: 100%;
+        background-color: #f9f9f9;
+        border-radius: 50px;
+    }
+    
+    .image-section img {
+     
+        width: 100%;
+        height: 70%;
+    }
+    .message-container {
+    margin-bottom: 20px;
+    text-align: center;
+    }
+
+    .error-message {
+        color: red;
+        font-size: 18px;
+        font-weight: bold;
+        margin: 10px 0;
+        padding: 10px;
+        background-color: #ffe6e6; /* Light red background */
+        border: 1px solid red;    /* Red border */
+        border-radius: 5px;
+    }
+    
+</style> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Signup Page</title>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="/logo.png" alt="FitStride Logo">
+            
+            <nav>
+                <a href="/">Home</a>
+                <a href="/contact">Contact</a>
+                <a href="/login">Login</a>
+            </nav>
+    
+        </div>
+     
+    </header>
+       
+    <main>
+    
+        <div class="welcome-message">
+            <h1>Welcome, Please signup</h1>
+        </div>
+    
+        <section class="signup-container">
+            <div class="form-section">
+            <!-- Check for message -->
+                {{#if message}}
+                    <div class="message-container">
+                        <h4 class="error-message">{{message}}</h4>
+                    </div>
+                {{/if}}
+                <form action="/auth/signup" method="POST">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter username"  name ="username"required>
+    
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="ex. someone@gmail.com" name ="email" required>
+    
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter password" name ="password" required>
+    
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm_password" placeholder="Confirm password" name ="confirm_password" required>
+                    <button type="submit">Signup</button>
+                </form>
+                <p>Already have an account? <a href="/login">Login</a></p>
+            </div>
+            <div class="image-section">
+                <img src="/signup.png" alt="signup Image">
+            </div>
+        </section>
+    </main>
+</body>
+</html>

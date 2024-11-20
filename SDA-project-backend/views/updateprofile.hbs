@@ -1,0 +1,217 @@
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body, .page {
+        width: 100%;
+        height: 100%;
+        background-color: #FFFFFF;
+        font-family: Roboto, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0;
+    }
+    header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 50px;
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+    }
+    
+    header .logo {
+        display: flex;
+        align-items: center;
+    }
+    
+    header .logo img {
+        height: 50px;
+        margin-right: 10px;
+    }
+    
+    header nav {
+        display: flex;
+        gap: 20px;
+    }
+    header nav a {
+        font-size: 18px;
+        text-decoration: none;
+        color: black;
+        font-weight: normal;
+        display: inline-block;
+        
+    }
+    
+    header nav a:hover {
+        color: #2046cf; 
+    }
+
+    .updateprofile-message {
+        width: 100%;
+        text-align: center;
+        font-size: 25px;
+        margin: 100px 0 20px 0; /* margin to make space for fixed header */
+        color: 000;
+        font-weight: bold;
+    }
+    /* Main Content Section */
+    .main-content {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        margin-top: 20px;
+        padding: 0 50px;
+    }
+    .update-frame {
+        width: 800px;
+        padding: 20px 20px;
+        background-color: #EBC2AA;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px; /* gap between form elements */
+    }
+
+    .update-frame form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px 15px; /* horizontal and vertical gaps */
+        width: 100%;
+    }
+
+    .update-frame form label {
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+
+    .update-frame form input {
+        width: 100%;
+        height: 45px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        color: #555;
+    }
+
+    .update-frame form .full-width {
+        grid-column: span 2;
+    }
+
+    .update-frame button {
+        grid-column: span 2;
+        background-color: #000;
+        color: #fff;
+        height: 40px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        text-align: center;
+        padding: 0 20px;
+        margin: 0 auto 0 auto;
+        width: 458px; 
+    }
+    
+    .update-frame button:hover {
+        background-color: #333;
+    }
+    #gender {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        height: 45px;
+    }
+        .message-container {
+    margin-bottom: 20px;
+    text-align: center;
+    }
+
+    .error-message {
+        color: red;
+        font-size: 18px;
+        font-weight: bold;
+        margin: 10px 0;
+        padding: 10px;
+        background-color: #ffe6e6; /* Light red background */
+        border: 1px solid red;    /* Red border */
+        border-radius: 5px;
+    }
+</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile - FitStride</title>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <div class="logo">
+                <img src="/logo.png" alt="Logo" class="logo">
+                <nav>
+                    <a href="/">Home</a>
+                    <a href="/contact">Contact</a>
+                </nav>
+            </div>
+        </header>
+        <!-- Welcome Message -->
+        <div class="updateprofile-message">Update PROFILE</div>
+        <div class="main-content">
+            <div class="update-frame">
+                 <!-- Check for message -->
+                {{#if message}}
+                    <div class="message-container">
+                        <h4 class="error-message">{{message}}</h4>
+                    </div>
+                {{/if}}
+                <form action="/auth/updateprofile" method="POST">
+                    <!-- Gender and Age -->
+                    <div>
+                        <label for="gender">Gender</label>
+                        <select name="gender" id="gender" class="input-gender" name = "gender" required>
+                            <option value="" disabled selected>Enter gender</option>
+                            <option value="male">
+                                Male
+                            </option>
+                            <option value="female">
+                                Female
+                            </option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="age">Age</label>
+                        <input type="age" id="age" placeholder="Enter age" class="input-age" name = "age" required>
+                    </div>
+                    
+                    <!-- Height and Weight -->
+                    <div>
+                        <label for="height">Height</label>
+                        <input type="height" id="height" placeholder="Enter height" class="input-height" name = "height" required>
+                    </div>
+                    <div>
+                        <label for="weight">Weight</label>
+                        <input type="weight" id="weight" placeholder="Enter weight" class="input-weight" name = "weight" required>
+                    </div>
+                    <button type="submit">Update Profile</button>
+                </form>
+            </div>
+        </div>        
+    </div>
+</body>
+</html>

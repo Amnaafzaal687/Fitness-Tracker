@@ -1,0 +1,232 @@
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Roboto, sans-serif;
+    }
+    
+    body {
+        background-color: white;
+    }
+    
+    header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 50px;
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+    }
+    
+    header .logo {
+        display: flex;
+        align-items: center;
+    }
+    
+    header .logo img {
+        height: 50px;
+        margin-right: 10px;
+    }
+    
+    header nav a {
+        font-size:18px;
+        margin: 80px 15px;
+        text-decoration: none;
+        color: black;
+        font-weight: regular;
+    }
+    header nav a:hover {
+        color: #2046cf; 
+    }
+    .welcome-message {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .welcome-message h1{
+        font-size: 24px;
+        color: rgba(0, 0, 0, 0.6);
+        font-weight: regular;
+    }
+    
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        padding-top: 100px; /* space between header and main content */
+    }
+    
+    .contact-message {
+    text-align: center;
+    margin-top: 20px;
+   }
+   
+
+   .additional-message {
+    text-align: left;
+    margin: 0; /* vertical margin */
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.6);
+    font-weight: regular;
+    }
+
+    
+    .contact-container {
+        display: flex;
+        max-width: 900px;
+        background-color: white;
+        border-radius: 10px;
+        overflow: hidden;
+        padding-top: 0px; 
+        min-height: 60vh;
+        justify-content: center;
+        align-items: center;
+      /*  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); */
+    }
+    
+    .form-section {
+        padding: 60px;
+        background-color: #fff;
+        width: 100%;
+        margin-right: 40px;
+        border-radius: 20px;
+    }
+    
+    .form-section h2 {
+        margin-bottom: 20px;
+        color: #333;
+    }
+    
+    .form-section form label {
+        display: block;
+        margin: 15px 0 5px;
+        color: #555;
+    }
+    
+    .form-section form input {
+        width: 760px;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        background:#CCE5E3;
+        border-radius: 5px;
+    }
+    
+    .form-section button {
+        width: 760px;
+        padding: 15px;
+        background-color: #333;
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    .form-section p {
+        margin-top: 20px;
+        text-align: center;
+    }
+    
+    .form-section p a {
+        color: #0073e6;
+        text-decoration: underline;
+    }
+    
+    .image-section {
+     width: 100%;
+        background-color: #f9f9f9;
+        border-radius: 50px;
+    }
+    
+    .image-section img {
+        width: 100%;
+        height: 70%;
+    }
+    #message {
+        padding: 10px;
+        width: 760px;
+        height: 170.91px; /*larger height for the message input */
+        margin-bottom: 30px;
+        border: 1px solid #ccc;
+        background:#CCE5E3;
+        border-radius: 5px;
+        resize:none;
+    }
+    
+        .message-container {
+    margin-bottom: 20px;
+    text-align: center;
+    }
+
+    .error-message {
+        color: red;
+        font-size: 18px;
+        font-weight: bold;
+        margin: 10px 0;
+        padding: 10px;
+        background-color: #ffe6e6; /* Light red background */
+        border: 1px solid red;    /* Red border */
+        border-radius: 5px;
+    }
+    
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="/logo.png" alt="FitStride Logo">
+           
+        
+            <nav>
+                <a href="/">Home</a>
+            </nav>
+
+        </div>
+ 
+    </header>
+   
+    <main>
+
+        <div class="contact-message">
+            <h1>Contact us</h1>
+        </div>
+        {{#if message}}
+            <div class="message-container">
+                <h4 class="error-message">{{message}}</h4>
+            </div>
+        {{/if}}
+        <section class="contact-container">
+            <div class="form-section">
+                <p class="additional-message">
+                    Have any questions or need assistance?<br/>Reach out to us now.
+                </p>
+               
+                <form action="/auth/contact" method="POST">
+                    <label for="username">Full name</label>
+                    <input type="text" id="username" placeholder="Enter name" name ="name"required>
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="ex. someone@gmail.com" name ="email" required>
+                    <label for="message">Your message</label>
+                    <textarea id="message" placeholder="Enter your question or message" name ="message" required></textarea>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
