@@ -9,10 +9,9 @@
     body {
         background-color: #f5f5f5;
         display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
         flex-direction: column;
+        align-items: center;
+        padding-top: 100px; /* Offset for fixed header */
     }
 
     /* Header Styling */
@@ -55,8 +54,77 @@
     nav a:hover {
         color: #2046cf;
     }
-    
+    nav a[style] {
+        color: white;
+        background-color: #0a0505;
+        border-radius: 7px;
+    }
+
+    /* Page Content Styling */
+    h1 {
+        margin: 50px 0;
+        text-align: center;
+        font-size: 28px;
+        color: #333;
+    }
+
+    /* Flex Container for Image and Text */
+    .info-container {
+        display: flex;
+        align-items: center; /* Align image and text vertically */
+        gap: 20px; /* Add spacing between image and text */
+        margin: 20px 0;
+    }
+
+    .info-container img {
+        width: 100px; /* Adjust image size */
+        height: auto; /* Maintain aspect ratio */
+    }
+
+    .info-text h2 {
+        font-size: 24px;
+        font-weight: 700;
+        color: black;
+    }
+
+    .info-text h3 {
+        margin-top: 10px;
+        font-size: 18px;
+        font-weight: 700;
+        color: rgb(65, 12, 12);
+    }
+
+    /* Card Container Styling */
+    .card-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 60px;
+        margin-top: 20px;
+    }
+
+    /* Individual Card Styling */
+    .card {
+        background-color: #CCE5E3;
+        padding: 60px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        text-align: center;
+    }
+    .card h3 {
+        margin-bottom: 10px;
+        font-size: 18px;
+        color: #333;
+    }
+    .card p {
+        font-size: 16px;
+        color: #555;
+        margin: 5px 0;
+        text-align: left;
+    }
 </style>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,7 +139,7 @@
         <img src="logo.png" alt="FitStride Logo">
         <nav>
             <a href="dashboard.html">Home</a>
-            <a href="suggestedplan.html" style="color: white; background-color: #0a0505; padding: 5px 10px; border-radius: 7px;">Suggested Plan</a>
+            <a href="suggestedplan.html" style="color: white; background-color: #0a0505;">Suggested Plan</a>
             <a href="logaworkoutsession.html">Log a Workout Session</a>
             <a href="logdailyactivity.html">Log Daily Activity</a>
             <a href="progress.html">Progress</a>
@@ -81,5 +149,41 @@
     </div>
 </header>
 
+<!-- Main Content -->
+<h1>Suggested Workout Plan</h1>
+
+<!-- Image and Text Section -->
+<div class="info-container">
+    <img src="leg.jpg" alt="Arm pic">
+    <div class="info-text">
+        <h2>Type: Legs</h2>
+        <h3>Level: Advance</h3>
+    </div>
+</div>
+
+<!-- Cards Section -->
+<div class="card-container">
+    <div class="card">
+        <h3>4 sets of 8 reps each</h3>
+        <p>1. Lunges</p>
+        <p>2. Squats</p>
+        <p>3. Hip thrusts</p>
+        <p>4. Signle Leg Deadlift</p>
+    </div>
+    <div class="card">
+        <h3>4 sets of 8 reps each</h3>
+        <p>1. Leg Curls</p>
+        <p>2. Glute Raises</p>
+        <p>3. Walking Lunges</p>
+        <p>4. Goblet Squats</p>
+    </div>
+    <div class="card">
+        <h3>4 sets of 8 reps each</h3>
+        <p>1. Weighted Calf Riases</p>
+        <p>2. Hamstring Curls</p>
+        <p>3. Leg Extenstions</p>
+        <p>4. Romanian Deadlifts</p>
+    </div>
+</div>
 </body>
 </html>
