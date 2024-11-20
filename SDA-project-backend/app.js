@@ -44,6 +44,6 @@ app.use('/',require('./routes/pages'));
 app.use('/auth',require('./routes/auth'));
 
 //listen
-app.listen(5002,()=>{
+app.listen(5001,()=>{
   console.log("listening")
 })
