@@ -30,23 +30,37 @@ router.post('/contact', authController.contact);
 
 router.post('/fitnessgoals', authenticateUser, authController.fitnessGoals);
 
-
-router.get('/profile', authenticateUser, (req, res) => {
-    res.render('profile', { user: req.user });
-});
-
 router.post('/logdailyactivity', authenticateUser, authController.logDailyActivity);
 
 router.get('/progress', authenticateUser, authController.getProgress);
 
+// Suggested Plan Route
+router.post('/suggestedplan', authenticateUser, (req, res) => {
+    const { fitnesslevel, workouttype } = req.body;
+
+    // Logic to determine which view to render
+    let viewToRender = '';
+    if (fitnesslevel === 'begineer' && workouttype === 'arms') {
+        viewToRender = 'suggestedplan2';
+    } else if (fitnesslevel === 'advance' && workouttype === 'arms') {
+        viewToRender = 'suggestedplan1';
+    } else if (fitnesslevel === 'begineer' && workouttype === 'legs') {
+        viewToRender = 'suggestedplan4';
+    } else if (fitnesslevel === 'advance' && workouttype === 'legs') {
+        viewToRender = 'suggestedplan3';
+    } else {
+        return res.status(400).send('Invalid fitness level or workout type');
+    }
+
+    // Render the appropriate view
+    res.render(viewToRender);
+});
 
 
-//const { getProgress } = require('../controllers/progressController');
+router.post('/logaworkoutsession', authenticateUser, authController.logWorkoutSession);
 
-//router.get('/progress', getProgress);
+// Route to view workout history
+router.get('/history', authenticateUser, authController.history);
 
-//router.get('/progress', (req, res) => {
- //   res.send('Progress route is working!');
-//});
 
 module.exports = router;
