@@ -1,12 +1,5 @@
-<!DOCTYPE HTML>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Progress</title>
-  
-  <style>
-    /* Reset and General Styling */
+<style> 
+  /* Reset and General Styling */
     * {
         margin: 0;
         padding: 0;
@@ -17,10 +10,9 @@
         background-color: #f5f5f5;
         display: flex;
         justify-content: center;
-        align-items: flex-start;
+        align-items: center;
         min-height: 100vh;
         flex-direction: column;
-        padding-top: 80px;
     }
 
     /* Header Styling */
@@ -64,173 +56,102 @@
         color: #2046cf;
     }
 
-    /* Chart Layout Styling */
-    #leftChart, #rightChart, #bottomChart {
+    /* Chart Containers */
+    .chart-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 100px;  /* Ensure space for the header */
+        width: 100%;
+        padding: 0 50px;
+    }
+    .chart {
         width: 300px;
         height: 300px;
     }
 
-    #leftChart {
-        position: absolute;
-        top: 120px;
-        left: 50px;
-    }
-
-    #rightChart {
-        position: absolute;
-        top: 120px;
-        right: 50px;
-    }
-
-    #bottomChart {
-        position: absolute;
-        bottom: 50px;
-        left: 50%;
-        transform: translateX(-50%);
+    /* Adjusting chart positioning for bottom chart */
+    #waterChart {
+        margin-top: 40px;
+        align-self: center; /* Center water chart horizontally at the bottom */
     }
   </style>
-
-  <script type="text/javascript">   
-    //const progressData = <%- progressData %>;
-   // console.log("in progress\n");
-   // console.log(progressData); // Check if the data is received correctly
-    
-   // const progressData = <%- progressData %>;
-   // if (!progressData || !progressData.steps || !progressData.calories || !progressData.water) {
-    // console.error("Progress data is missing or incomplete:", progressData);
-    }
-    console.log("Received progressData: ", progressData);
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Progress</title>
+<script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+<script type="text/javascript">
     window.onload = function () {
-        var chart1 = new CanvasJS.Chart("leftChart", {
-            title: {
-              text: "Steps Progress",
-              fontFamily: "Impact",
-              fontWeight: "normal"
-            },
-            legend: {
-              verticalAlign: "bottom",
-              horizontalAlign: "center"
-            },
-            data: [
-              {
-                indexLabelFontSize: 20,
-                indexLabelFontFamily: "Garamond",
-                indexLabelFontColor: "darkgrey",
-                indexLabelLineColor: "darkgrey",
-                indexLabelPlacement: "outside",
-                type: "doughnut",
-                showInLegend: true,
-                dataPoints: [
-                  { y: progressData.steps.missed, legendText: "Missed Steps", color: "#4b7fa2" },
-                  { y: progressData.steps.completed, legendText: "Steps Taken", color: "#1f4e79" }
-                  //  { y: 35, legendText: "Missed Steps", color: "#4b7fa2" },
-                    //{ y: 57, legendText: "Steps Taken", indexLabel: "Completed Steps", color: "#1f4e79" }
-                ]
-              }
-            ]
-          });
-          
-          var chart2 = new CanvasJS.Chart("rightChart", {
-            title: {
-              text: "Calories Burn Progress",
-              fontFamily: "Impact",
-              fontWeight: "normal"
-            },
-            legend: {
-              verticalAlign: "bottom",
-              horizontalAlign: "center"
-            },
-            data: [
-              {
-                indexLabelFontSize: 20,
-                indexLabelFontFamily: "Garamond",
-                indexLabelFontColor: "darkgrey",
-                indexLabelLineColor: "darkgrey",
-                indexLabelPlacement: "outside",
-                type: "doughnut",
-                showInLegend: true,
-                dataPoints: [
-                  { y: progressData.calories.missed, legendText: "Missed Calories", color: "#4b7fa2" },
-                  { y: progressData.calories.completed, legendText: "Calories Burned", color: "#1f4e79" }
-                  //{ y: 35, legendText: "Missed Calories", color: "#4b7fa2" },
-                  //{ y: 57, legendText: "Calories Burned", indexLabel: "Calories Burned", color: "#1f4e79" }
-                ]
-              }
-            ]
-          });
-          
-          var chart3 = new CanvasJS.Chart("bottomChart", {
-            title: {
-              text: "Water Intake Progress",
-              fontFamily: "Impact",
-              fontWeight: "normal"
-            },
-            legend: {
-              verticalAlign: "bottom",
-              horizontalAlign: "center"
-            },
-            data: [
-              {
-                indexLabelFontSize: 20,
-                indexLabelFontFamily: "Garamond",
-                indexLabelFontColor: "darkgrey",
-                indexLabelLineColor: "darkgrey",
-                indexLabelPlacement: "outside",
-                type: "doughnut",
-                showInLegend: true,
-                dataPoints: [
-                  { y: progressData.water.missed, legendText: "Missed Intake", color: "#4b7fa2" },
-                  { y: progressData.water.completed, legendText: "Water Consumed", color: "#1f4e79" }
-                  //{ y: 35, legendText: "Missed Intake", color: "#4b7fa2" },
-                  //{ y: 57, legendText: "Water Consumed", indexLabel: "Water Consumed", color: "#1f4e79" }
-                ]
-              }
-            ]
-          });
-          
+        
+        const progressData = {{{json progressData}}}; // Safely parse progressData
 
-      chart1.render();
-      chart2.render();
-      chart3.render();
-    }
+        // Chart Configurations with Purple Color Shades
+        const chartsConfig = [
+            {
+                container: "stepsChart",
+                title: "Steps Progress",
+                data: [
+                    { y: progressData.steps.missed, legendText: "Missed Steps", color: "#4b7fa2" },  
+                    { y: progressData.steps.completed, legendText: "Steps Taken", color: "#1f4e79" }  
+                ]
+            },
+            {
+                container: "caloriesChart",
+                title: "Calories Burned",
+                data: [
+                    { y: progressData.calories.missed, legendText: "Missed Calories", color: "#4b7fa2" }, 
+                    { y: progressData.calories.completed, legendText: "Calories Burned", color: "#1f4e79" } 
+                ]
+            },
+            {
+                container: "waterChart",
+                title: "Water Intake",
+                data: [
+                    { y: progressData.water.missed, legendText: "Missed Intake", color: "#4b7fa2" },  
+                    { y: progressData.water.completed, legendText: "Water Consumed", color: "#1f4e79" } 
+                ]
+            }
+        ];
+
+        // Render Charts
+        chartsConfig.forEach(config => {
+            const chart = new CanvasJS.Chart(config.container, {
+                title: { text: config.title, fontFamily: "Impact", fontWeight: "normal" },
+                legend: { verticalAlign: "bottom", horizontalAlign: "center" },
+                data: [{
+                    type: "doughnut",
+                    showInLegend: true,
+                    dataPoints: config.data
+                }]
+            });
+            chart.render();
+        });
+    };
   </script>
-
-  <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 </head>
 <body>
-  <!-- Header Section -->
   <header>
     <div class="logo">
       <img src="/logo.png" alt="FitStride Logo">
-      <nav>
-        <a href="/dashboard">Home</a>
-        <a href="/suggestedplan">Suggested Plan</a>
-        <a href="/logaworkoutsession">Log a Workout Session</a>
-        <a href="/logdailyactivity">Log Daily Activity</a>
-        <a href="/progress" style="color: white; background-color: #0a0505; padding: 5px 10px; border-radius: 7px;">Progress</a>
-        <a href="/history">History</a>
-        <a href="/fitnessgoals">Fitness Goals</a>
-      </nav>
     </div>
+    <nav>
+      <a href="/auth/dashboard">Home</a>
+      <a href="/suggestedplan">Suggested Plan</a>
+      <a href="/logaworkoutsession">Log a Workout Session</a>
+      <a href="/logdailyactivity">Log Daily Activity</a>
+      <a href="/auth/progress" style="color: white; background-color: #0a0505; padding: 5px 10px; border-radius: 7px;">Progress</a>
+      <a href="/auth/history">History</a>
+      <a href="/fitnessgoals">Fitness Goals</a>
+    </nav>
   </header>
-  <section>
-    {{#if progressData}}
-        <p><strong>Name:</strong> {{progressData.steps.missed}}</p>
-        <p><strong>Email:</strong> {{progressData.steps.completed}}</p>
-        <p><strong>Gender:</strong> {{progressData.calories.missed}}</p>
-        <p><strong>Age:</strong> {{progressData.calories.completed}}</p>
-        <p><strong>Height:</strong> {{progressData.water.missed}} Inch</p>
-        <p><strong>Weight:</strong> {{progressData.water.completed}} Kg</p>
-                
-    {{else}}
-        <p>No profile found. Please create one.</p>
-        <a href="/createprofile">Create Profile</a>
-    {{/if}} 
-  </section>
 
   <!-- Chart Containers -->
-  <div id="leftChart"></div>
-  <div id="rightChart"></div>
-  <div id="bottomChart"></div>
+  <div class="chart-container">
+    <div id="stepsChart" class="chart"></div>
+    <div id="caloriesChart" class="chart"></div>
+  </div>
+  <div id="waterChart" class="chart"></div>
 </body>
 </html>

@@ -254,7 +254,7 @@ exports.dashboard = (req, res) => {
 
     const userId = req.user.id;
 
-    console.log('User ID:', userId);  // Log the user ID to ensure it's being passed correctly
+    console.log('User ID:', userId);
 
     // Query to fetch both user and profile data from the users and profiles tables
     const query = `
@@ -400,7 +400,6 @@ exports.fitnessGoals = (req, res) => {
         });
     }
 
-    // Correct SQL query syntax
     const query = `
         INSERT INTO fitness_goals (user_id, activity, steps_goals, calories_goals,water_goals)
         VALUES (?, ?, ?, ?,?)
@@ -424,7 +423,7 @@ exports.fitnessGoals = (req, res) => {
 
 
 exports.logDailyActivity = (req, res) => {
-    const { caloriesburn, waterintake, sets } = req.body;
+    const { caloriesburn, waterintake, steps } = req.body;
 
     if (!req.user || !req.user.id) {
         return res.status(400).render('logdailyactivity', {
@@ -435,7 +434,7 @@ exports.logDailyActivity = (req, res) => {
     const userId = req.user.id;
 
     // Validate input fields
-    if (!caloriesburn || !waterintake || !sets) {
+    if (!caloriesburn || !waterintake || !steps) {
         return res.status(400).render('logdailyactivity', {
             message: 'All fields are required.'
         });
@@ -448,7 +447,7 @@ exports.logDailyActivity = (req, res) => {
     `;
     db.query(
         query,
-        [userId, caloriesburn, waterintake, sets],
+        [userId, caloriesburn, waterintake, steps],
         (error, results) => {
             if (error) {
                 console.error('Database Error:', error);
@@ -478,13 +477,13 @@ exports.getProgress = (req, res) => {
         FROM daily_activities
         WHERE user_id = ? AND DATE(created_at) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
     `;
-
     db.query(fetchFitnessGoals, [userId], (goalError, goalResults) => {
         if (goalError) {
             console.error("Error fetching fitness goals:", goalError);
             return res.status(500).send("Error fetching fitness goals.");
         }
-
+        //const goals = goalResults;
+        console.log(goalResults)
         const goals = goalResults[0] || { steps_goals: 0, calories_goals: 0, water_goals: 0 };
 
         db.query(fetchDailyActivity, [userId], (activityError, activityResults) => {
@@ -492,21 +491,61 @@ exports.getProgress = (req, res) => {
                 console.error("Error fetching daily activity:", activityError);
                 return res.status(500).send("Error fetching daily activity.");
             }
-
+            console.log(activityResults[0])
+            console.log(activityResults)
             const activity = activityResults[0] || { total_steps: 0, total_calories: 0, total_water: 0 };
 
-          //  const progressData = {
-           //     steps: { completed: activity.total_steps, missed: Math.max(goals.steps_goals - activity.total_steps, 0) },
-           //     calories: { completed: activity.total_calories, missed: Math.max(goals.calories_goals - activity.total_calories, 0) },
-           //     water: { completed: activity.total_water, missed: Math.max(goals.water_goals - activity.total_water, 0) },
-           // };
            const progressData = {
-            steps: { completed: 8000, missed: 2000 },
-            calories: { completed: 1500, missed: 500 },
-            water: { completed: 2, missed: 1 },
+                steps: { completed: activity.total_steps, missed: Math.max(goals.steps_goals - activity.total_steps, 0) },
+                calories: { completed: activity.total_calories, missed: Math.max(goals.calories_goals - activity.total_calories, 0) },
+                water: { completed: activity.total_water, missed: Math.max(goals.water_goals - activity.total_water, 0) },
             };
-            console.log(progressData);
-            res.render("progress", { progressData: JSON.stringify(progressData) });
+            console.log(progressData)
+            res.render("progress", { progressData });
         });
+    });
+};
+
+
+// Save a workout session
+exports.logWorkoutSession = async (req, res) => {
+    const { workoutname, duration, sets, date } = req.body;
+    const userId = req.user.id; // Assuming `req.user` contains authenticated user data
+
+    try {
+        // Insert workout session details into the database
+        await db.query(
+            'INSERT INTO workout_sessions (user_id, workoutname, duration, sets, date) VALUES (?, ?, ?, ?, ?)',
+            [userId, workoutname, duration, sets, date]
+        );
+       
+        res.redirect('/successful');
+    } catch (error) {
+        console.error('Error logging workout session:', error);
+        res.status(500).send('An error occurred while logging your workout session.');
+    }
+};
+//Get user history
+exports.history = async (req, res) => {
+    const userId = req.user.id;
+
+    const query = 'SELECT workoutname, duration, sets, date FROM workout_sessions WHERE user_id = ? ORDER BY date DESC';
+
+    db.query(query, [userId], (error, result) => {
+        if (error) {
+            console.error('Database Error:', error);
+            return res.status(500).render('history', {
+                message: 'Error fetching workout history'
+            });
+        }
+
+        if (result.length === 0) {
+            return res.status(404).render('history', {
+                message: 'No history found. Please log a workout session.'
+            });
+        }
+
+        console.log('Workouts Data:', result); // Debugging
+        return res.render('history', {workouts: result});
     });
 };

@@ -68,7 +68,6 @@
         color: #333;
     }
 
-    /* Flex Container for Image and Text */
     .info-container {
         display: flex;
         align-items: center; /* Align image and text vertically */
@@ -77,7 +76,7 @@
     }
 
     .info-container img {
-        width: 100px; /* Adjust image size */
+        width: 300px; /* Adjust image size */
         height: auto; /* Maintain aspect ratio */
     }
 
@@ -138,12 +137,12 @@
     <div class="logo">
         <img src="/logo.png" alt="FitStride Logo">
         <nav>
-            <a href="/dashboard">Home</a>
+            <a href="/auth/dashboard">Home</a>
             <a href="/suggestedplan" style="color: white; background-color: #0a0505;">Suggested Plan</a>
             <a href="/logaworkoutsession">Log a Workout Session</a>
             <a href="/logdailyactivity">Log Daily Activity</a>
-            <a href="/progress">Progress</a>
-            <a href="/history">History</a>
+            <a href="/auth/progress">Progress</a>
+            <a href="/auth/history">History</a>
             <a href="/fitnessgoals">Fitness Goals</a>
         </nav>
     </div>
@@ -154,7 +153,7 @@
 
 <!-- Image and Text Section -->
 <div class="info-container">
-    <img src="/leg.jpg" alt="Arm pic">
+    <img src="/legsnew.png" alt="leg pic">
     <div class="info-text">
         <h2>Type: Legs</h2>
         <h3>Level: Advance</h3>
