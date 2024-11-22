@@ -29,14 +29,14 @@ exports.signup = async (req, res) => {
                 message: 'All fields are required.'
             });
         }
-        
-        if(!Validatepassword(password)){
+
+        if (!Validatepassword(password)) {
             return res.status(400).render('signup', {
                 message: 'Password must be at least six characters long.'
             });
         }
 
-        if(!Validateemail(email)){
+        if (!Validateemail(email)) {
             return res.status(400).render('signup', {
                 message: 'Invalid email format.'
             });
@@ -48,12 +48,11 @@ exports.signup = async (req, res) => {
             });
         }
 
-        const hashedPassword = await bcrypt.hash(password, 8);
-
+        // Check if email already exists
         db.query(
-            'INSERT INTO users SET ?',
-            { name: username, email: email, password: hashedPassword }, 
-            (error, results) => {
+            'SELECT email FROM users WHERE email = ?',
+            [email],
+            async (error, results) => {
                 if (error) {
                     console.error(error);
                     return res.status(500).render('signup', {
@@ -61,7 +60,29 @@ exports.signup = async (req, res) => {
                     });
                 }
 
-                res.redirect('/login'); // Redirect to login after successful registration
+                if (results.length > 0) {
+                    return res.status(400).render('signup', {
+                        message: 'Email is already registered. Please use a different email.'
+                    });
+                }
+
+                // If email does not exist, proceed with registration
+                const hashedPassword = await bcrypt.hash(password, 8);
+
+                db.query(
+                    'INSERT INTO users SET ?',
+                    { name: username, email: email, password: hashedPassword },
+                    (error, results) => {
+                        if (error) {
+                            console.error(error);
+                            return res.status(500).render('signup', {
+                                message: 'An error occurred. Please try again.'
+                            });
+                        }
+
+                        res.redirect('/login'); // Redirect to login after successful registration
+                    }
+                );
             }
         );
     } catch (err) {
