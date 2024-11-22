@@ -234,7 +234,6 @@ exports.logout = (req, res) => {
 
 //Create Profile
 exports.createProfile = (req, res) => {
-    console.log('req.user:', req.user); // Check if req.user is populated
     const { gender, age, height, weight } = req.body;
 
     if (!req.user || !req.user.id) {
@@ -275,8 +274,6 @@ exports.dashboard = (req, res) => {
 
     const userId = req.user.id;
 
-    console.log('User ID:', userId);
-
     // Query to fetch both user and profile data from the users and profiles tables
     const query = `
         SELECT users.name, users.email, profiles.gender, profiles.age, profiles.height, profiles.weight
@@ -292,8 +289,6 @@ exports.dashboard = (req, res) => {
                 message: 'An error occurred while fetching your profile data.'
             });
         }
-
-        console.log('Query Result:', result);  // Log the result of the query to check if it returns both user and profile data
 
         if (result.length === 0) {
             // This indicates no profile found in the database
@@ -503,8 +498,6 @@ exports.getProgress = (req, res) => {
             console.error("Error fetching fitness goals:", goalError);
             return res.status(500).send("Error fetching fitness goals.");
         }
-        //const goals = goalResults;
-        console.log(goalResults)
         const goals = goalResults[0] || { steps_goals: 0, calories_goals: 0, water_goals: 0 };
 
         db.query(fetchDailyActivity, [userId], (activityError, activityResults) => {
@@ -512,8 +505,6 @@ exports.getProgress = (req, res) => {
                 console.error("Error fetching daily activity:", activityError);
                 return res.status(500).send("Error fetching daily activity.");
             }
-            console.log(activityResults[0])
-            console.log(activityResults)
             const activity = activityResults[0] || { total_steps: 0, total_calories: 0, total_water: 0 };
 
            const progressData = {
@@ -521,7 +512,6 @@ exports.getProgress = (req, res) => {
                 calories: { completed: activity.total_calories, missed: Math.max(goals.calories_goals - activity.total_calories, 0) },
                 water: { completed: activity.total_water, missed: Math.max(goals.water_goals - activity.total_water, 0) },
             };
-            console.log(progressData)
             res.render("progress", { progressData });
         });
     });
@@ -565,8 +555,6 @@ exports.history = async (req, res) => {
                 message: 'No history found. Please log a workout session.'
             });
         }
-
-        console.log('Workouts Data:', result); // Debugging
         return res.render('history', {workouts: result});
     });
 };
