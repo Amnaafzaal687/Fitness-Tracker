@@ -94,6 +94,17 @@
     background: linear-gradient(90deg, #ff9a9e, #fad0c4);
     border: 1px solid #ff7585;
     color: #662d34;
+    /*
+    color: #2046cf;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #eaf3ff;
+    border: 1px solid #2046cf;
+    border-radius: 5px;
+    text-align: center;
+        */
 }
         /* Profile Details */
         .profile-details {
@@ -111,6 +122,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
+            /*margin-left: 20px;*/
         }
 
         .profile-info p {
@@ -185,9 +197,7 @@
         <h4 class="error-message">{{message}}</h4>
     </div>
     {{/if}}
-
-    <!-- Profile Details -->
-    <div class="profile-details">
+      <div class="profile-details">
         <div class="profile-picture">👤</div>
         <div class="profile-info">
             <p><strong>Name:</strong> {{profile.name}}</p>
