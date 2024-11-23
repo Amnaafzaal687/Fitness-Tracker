@@ -164,7 +164,7 @@
 <p style="font-weight: 700; font-size: 18px;  margin-bottom: 10px;">Stay on target with a weekly goal</p>
 <!-- Form Section -->
 <div class="form-container">
-    <form action="/auth/fitnessgoals" method="POST">
+    <form action="/auth/checkGoalStatus" method="POST">
         {{#if message}}
             <div class="message-container">
                 <h4 class="error-message">{{message}}</h4>
@@ -185,13 +185,13 @@
         </select>
 
         <label for="goaltype">Goal Type</label>
-        <input type="number" id="goaltype" placeholder="Distance in meters" name="goaltype" required min="1" step="1">
+        <input type="number" id="goaltype" placeholder="Distance in meters" name="steps_goals" required min="1" step="1">
 
         <label for="goaltarget">Goal Target</label>
-        <input type="number" id="goaltarget" placeholder="Enter calories to burn" name="goaltarget" required min="1" step="1">
+        <input type="number" id="goaltarget" placeholder="Enter calories to burn" name="calories_goals" required min="1" step="1">
 
         <label for="waterintake">Water Intake</label>
-        <input type="text" id="waterintake" placeholder="Amount of Water in litres" name="waterintake" required>
+        <input type="text" id="waterintake" placeholder="Amount of Water in litres" name="water_goals" required>
         <button>Save</button>
     </form>
 </div>
