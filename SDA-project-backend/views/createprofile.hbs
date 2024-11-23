@@ -60,11 +60,11 @@
         width: 100%;
         text-align: center;
         font-size: 25px;
-        margin: 100px 0 20px 0; /* Adjusted margin to make space for fixed header */
+        margin: 110px 0 20px 0; 
         color: 000;
         font-weight: bold;
     }
-    /* Main Content Section */
+   
     .main-content {
         display: flex;
         align-items: flex-start;
@@ -73,27 +73,28 @@
         padding: 0 50px;
     }
     .create-frame {
-        width: 800px;
-        padding: 20px 20px;
+        width: 550px;
+        padding: 30px 30px;
         background-color: #CCE5E3;
-        border-radius: 10px;
+        border-radius: 8px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 20px; /* gap between form elements */
     }
 
     .create-frame form {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 50px 15px; /* horizontal and vertical gaps */
-        width: 100%;
+    display: flex;  
+    flex-direction: column;
+    gap: 30px; 
+    width: 100%;
+        
     }
 
     .create-frame form label {
-        font-size: 14px;
+        
+        font-size: 16px;
         font-weight: 500;
-        margin-bottom: 5px;
+        margin-bottom: 10px;
     }
 
     .create-frame form input {
@@ -106,12 +107,9 @@
         color: #555;
     }
 
-    .create-frame form .full-width {
-        grid-column: span 2;
-    }
+
 
     .create-frame button {
-        grid-column: span 2;
         background-color: #000;
         color: #fff;
         height: 40px;
@@ -121,8 +119,8 @@
         font-size: 16px;
         text-align: center;
         padding: 0 20px;
-        margin: 0 auto 0 auto;
-        width: 458px; 
+        margin: 20px auto 0 auto;
+        width: 450px; 
     }
     
     .create-frame button:hover {
@@ -131,11 +129,12 @@
     #gender {
         width: 100%;
         padding: 10px;
-        margin-bottom: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
         height: 45px;
+        color:  #555;
     }
+    
     .message-container {
     margin-bottom: 20px;
     text-align: center;
@@ -147,9 +146,10 @@
         font-weight: bold;
         margin: 10px 0;
         padding: 10px;
-        background-color: #ffe6e6; /* Light red background */
-        border: 1px solid red;    /* Red border */
-        border-radius: 5px;
+        background-color: #ffe6e6; 
+        border: 1px solid red;  
+        max-width: 500px; 
+        word-wrap: break-word; 
     }
 </style>
 <!DOCTYPE html>
@@ -175,7 +175,7 @@
         <div class="main-content">
             <div class="create-frame">
                 <!-- Check for message -->
-                {{#if message}}
+            {{#if message}}
                     <div class="message-container">
                         <h4 class="error-message">{{message}}</h4>
                     </div>
