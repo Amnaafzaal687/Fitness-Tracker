@@ -80,32 +80,23 @@
             margin-bottom: 20px;
             text-align: left;
         }
-/* Message Styling */
-.message-container {
-    width: 100%;
-    margin-bottom: 20px;
-    text-align: center;
-}
-.error-message {
-    font-size: 18px;
-    font-weight: bold;
-    padding: 10px;
-    border-radius: 8px;
-    background: linear-gradient(90deg, #ff9a9e, #fad0c4);
-    border: 1px solid #ff7585;
-    color: #662d34;
-    /*
-    color: #2046cf;
-    font-size: 18px;
-    font-weight: bold;
-    margin: 10px 0;
-    padding: 10px;
-    background-color: #eaf3ff;
-    border: 1px solid #2046cf;
-    border-radius: 5px;
-    text-align: center;
-        */
-}
+        
+        /* Message Styling */
+        .message-container {
+            width: 100%;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .error-message {
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #ff9a9e, #fad0c4);
+            border: 1px solid #ff7585;
+            color: #662d34;
+        }
+
         /* Profile Details */
         .profile-details {
             display: grid;
@@ -114,15 +105,12 @@
             padding: 20px;
             border: 1px dashed #CCE5E3;
             border-radius: 10px;
-            
         }
 
-        /* Adjust the profile info to make it more aligned */
         .profile-info {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            /*margin-left: 20px;*/
         }
 
         .profile-info p {
@@ -132,18 +120,26 @@
             line-height: 1.5;
         }
 
-        /* Profile Icon */
-        .profile-icon {
-            width: 50px;
-            height: 50px;
-            background-color: #e0e0e0;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 20px;
-            font-size: 24px;
-            font-weight: bold;
+        /* Goal Section */
+        .goal-container {
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .goal-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f7f7f7;
+            border-radius: 8px;
+        }
+
+        .goal-item p {
+            margin: 0;
+            font-size: 16px;
+            color: #333;
         }
 
         /* Profile Buttons */
@@ -167,6 +163,61 @@
         .profile-buttons button:hover {
             background-color: #333;
         }
+
+        /* Table Styling with Cool Gradient */
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .history-table thead {
+            background: linear-gradient(90deg, #ff9a9e, #fad0c4); /* Message box gradient */
+            color:  #662d34;
+            text-transform: uppercase;
+        }
+
+        .history-table th {
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .history-table td {
+            padding: 15px;
+            font-size: 16px;
+            color: #333;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .history-table tbody tr:hover {
+            background: linear-gradient(90deg, #fce3e6, #ffe5ea); /* Subtle gradient hover effect */
+        }
+
+        .history-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .history-table td:first-child,
+        .history-table th:first-child {
+            border-left: 1px solid #ddd;
+        }
+
+        .history-table td:last-child,
+        .history-table th:last-child {
+            border-right: 1px solid #ddd;
+        }
+
+        .history-table p {
+            margin: 0;
+        }
+
+
     </style>
 </head>
 <body>
@@ -183,7 +234,7 @@
         <a href="/logdailyactivity">Log Daily Activity</a>
         <a href="/auth/progress">Progress</a>
         <a href="/auth/history">History</a>
-        <a href="/fitnessgoals">Fitness Goals</a>
+        <a href="/auth/checkGoalStatus">Fitness Goals</a>
     </nav>
 </header>
 
@@ -197,7 +248,9 @@
         <h4 class="error-message">{{message}}</h4>
     </div>
     {{/if}}
-      <div class="profile-details">
+
+    <!-- Profile Details -->
+    <div class="profile-details">
         <div class="profile-picture">👤</div>
         <div class="profile-info">
             <p><strong>Name:</strong> {{profile.name}}</p>
@@ -209,6 +262,41 @@
         </div>
     </div>
 
+    <!-- Goal Section -->
+    <br>
+    <div class="profile-header">Fitness Goals</div>
+    <div class="goal-container">
+            <section>
+        {{#if goals}}
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Goal No</th>
+                        <th>Activity</th>
+                        <th>Steps Goal</th>
+                        <th>Calories Goal</th>
+                        <th>Water Intake Goal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each goals}}
+                    <tr>
+                        <td>{{this.id}}</td>
+                        <td>{{this.activity}}</td>
+                        <td>{{this.steps_goals}}</td>
+                        <td>{{this.calories_goals}}</td>
+                        <td>{{this.water_goals}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        {{else}}
+        <p>You currently have no active fitness goals.</p>
+        <a href="/auth/checkGoalStatus">Set Fitness Goals</a>
+        {{/if}}
+    </section>
+    </div>
+
     <!-- Profile Buttons -->
     <div class="profile-buttons">
         <button onclick="window.location.href='/updateprofile'">Update Profile</button>
@@ -218,7 +306,7 @@
 </div>
 
 <script>
-    /* for logout implementation */
+    /* Logout Script */
     document.getElementById('logout-btn').addEventListener('click', function() {
         fetch('/auth/logout', {
             method: 'POST',
@@ -228,7 +316,6 @@
         })
         .then(response => {
             if (response.ok) {
-                // Redirect to login page after logout
                 window.location.href = '/login';
             } else {
                 alert("Error logging out.");

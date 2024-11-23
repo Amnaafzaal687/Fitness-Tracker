@@ -14,14 +14,14 @@
     body {
         height: 100vh;
         width: 100vw;
-        background: url('goal.jpg') no-repeat center center;
-        background-size: cover; /* Ensures the image fully covers the screen */
-        background-attachment: fixed; /* Keeps the background fixed */
+        background: url('/goal.jpg') no-repeat center center;
+        background-size: cover; 
+        background-attachment: fixed;
         color: white;
         display: flex;
         justify-content: center;
         align-items: center;
-        overflow: hidden; /* Prevents unnecessary scrollbars */
+        overflow: hidden;
     }
     header {
         width: 100%;
@@ -29,7 +29,7 @@
         align-items: center;
         justify-content: space-between;
         padding: 20px 50px;
-        background-color: rgba(0, 0, 0, 0.5); /* Transparent header background */
+        background-color: rgba(0, 0, 0, 0.5);
         position: fixed;
         top: 0;
         left: 0;
@@ -68,7 +68,7 @@
         text-align: center;
         width: 90%;
         max-width: 500px;
-        margin-top: 140px; /* Prevent overlap with the header */
+        margin-top: 140px;
     }
     .content h1 {
         font-size: 28px;
@@ -96,6 +96,21 @@
     .track-btn:hover {
         background: #16349b;
     }
+    .message-container {
+    margin-bottom: 20px;
+    text-align: center;
+    }
+
+    .error-message {
+        color: rgb(114, 101, 127);
+        font-size: 18px;
+        font-weight: bold;
+        margin: 10px 0;
+        padding: 10px;
+        background-color: #ffe6e6; /* Light red background */
+        border: 1px solid rgb(105, 6, 6);    /* Red border */
+        border-radius: 5px;
+    }
 </style>
 </head>
 <body>
@@ -110,18 +125,23 @@
             <a href="/logdailyactivity">Log Daily Activity</a>
             <a href="/auth/progress">Progress</a>
             <a href="/auth/history">History</a>
-            <a href="/fitnessgoals">Fitness Goals</a>
+            <a href="/auth/checkGoalStatus" style="color: white; background-color: #0a0505; padding: 5px 10px; border-radius: 7px;">Fitness Goals</a>
         </nav>
 </header>
 
 <div class="content">
+    {{#if message}}
+        <div class="message-container">
+            <h4 class="error-message">{{message}}</h4>
+        </div>
+    {{/if}}
     <h1>Your Weekly Goals</h1>
     <div class="goals">
-        <p><strong>Water Intake:</strong> 3 Liters/day</p>
-        <p><strong>Distance to Cover:</strong> 5 km/day</p>
-        <p><strong>Calories to Burn:</strong> 500 Calories/day</p>
+        <p><strong>Water Intake:</strong> {{goal.water_goals}} Liters/day</p>
+        <p><strong>Distance to Cover:</strong> {{goal.steps_goals}} km/day</p>
+        <p><strong>Calories to Burn:</strong> {{goal.calories_goals}} Calories/day</p>
     </div>
-    <a href="#" class="track-btn">Track Progress</a>
+    <a href="/auth/progress" class="track-btn">Track Progress</a>
 </div>
 
 </body>

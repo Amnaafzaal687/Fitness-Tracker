@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goal Completed</title>
+    <style>
+            * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Roboto, sans-serif;
+    }
+    body {
+        background-color: #f5f5f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        flex-direction: column;
+    }
+
+    /* Header Styling */
+    header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 50px;
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+    }
+    .logo {
+        display: flex;
+        align-items: center;
+    }
+    .logo img {
+        height: 50px;
+        margin-right: 10px;
+    }
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    nav a {
+        font-size: 16px;
+        margin: 0 15px;
+        text-decoration: none;
+        color: black;
+        font-weight: 400;
+        border: 1px solid rgb(129, 117, 117);
+        border-radius: 7px;
+        padding: 5px 10px;
+    }
+    nav a:hover {
+        color: #2046cf;
+    }
+
+    body h1 {
+        margin-top: 100px; /* Adjusted for fixed header */
+        text-align: center;
+        padding: 20px;
+        color: #333;
+    }
+
+    /* Form Container Styling */
+    .form-container {
+        width: 417px;
+        background-color: #CCE5E3;
+        padding: 50px;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    .form-container label {
+        display: block;
+        text-align: left;
+        margin: 15px 0 5px;
+        color: #555;
+    }
+
+    .form-container input,
+    .form-container select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .form-container button {
+        padding: 10px 20px;
+        background-color: black; /* Button background as black */
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 20px;
+        font-size: 16px;
+    }
+
+    .form-container button:hover {
+        background-color: #555;
+    }
+
+    /* Message Container */
+    .message-container {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+
+    .goal-container {
+        width: 100%;
+        max-width: 600px;  
+        margin: 0 auto;   
+        padding: 20px;
+    }
+
+    .goal-item {
+        display: flex;
+        justify-content: flex-start; 
+        margin-bottom: 10px; 
+        }
+
+    .goal-item p {
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    .goal-item strong {
+        width: 200px; 
+        display: inline-block;
+        text-align: left;
+    }
+
+    .water-goal {
+        width: auto; 
+        display: inline-block;
+        margin-bottom: 0;
+    }
+
+    .goal-container p {
+        margin: 0;
+        padding: 0;
+    }
+
+        /* Celebration Popup */
+        .celebration-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #28a745;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 15px;
+            display: none;
+            animation: popUpAnim 2s forwards;
+        }
+
+        @keyframes popUpAnim {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Confetti Styles */
+        .confetti {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 999;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #28a745;
+            animation: confettiFall 2s infinite;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100vh);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <img src="/logo.png" alt="FitStride Logo">
+            <nav>
+                <a href="/auth/dashboard">Home</a>
+                <a href="/suggestedplan">Suggested Plan</a>
+                <a href="/logaworkoutsession">Log a Workout Session</a>
+                <a href="/logdailyactivity">Log Daily Activity</a>
+                <a href="/auth/progress">Progress</a>
+                <a href="/auth/history">History</a>
+                <a href="/auth/checkGoalStatus" style="color: white; background-color: #0a0505; padding: 5px 10px; border-radius: 7px;">Fitness Goals</a>
+            </nav>
+        </div>
+    </header>
+
+    <h1>Congratulations! You've Achieved Your Goal!</h1>
+
+    <!-- Celebration Popup -->
+    <div class="celebration-container" id="celebrationPopup">
+        🎉 Congratulations 🎉
+    </div>
+
+    <!-- Confetti Section -->
+    <div class="confetti" id="confetti"></div>
+
+    <div class="form-container">
+        <div class="goal-container"> 
+
+            <div class="goal-item">
+                <p><strong>Activity: </strong> Running</p>
+            </div>
+            <div class="goal-item">
+                <p><strong>Steps Goal: </strong> 10,000</p>
+            </div>
+            <div class="goal-item">
+                <p><strong>Calories Goal: </strong> 500</p>
+            </div>
+            <div class="goal-item">
+                <p><strong>Water Intake Goal:</strong> 3 liters</p>
+            </div>
+        </div>
+        <form action="/fitnessgoals" method="GET">
+            <button type="submit">Enter a New Goal</button>
+        </form>
+    </div>
+
+    <script>
+        // Function to generate confetti pieces
+        function createConfetti() {
+            const confettiContainer = document.getElementById("confetti");
+            for (let i = 0; i < 100; i++) {
+                const confettiPiece = document.createElement("div");
+                confettiPiece.classList.add("confetti-piece");
+                confettiPiece.style.left = Math.random() * 100 + "%";
+                confettiPiece.style.animationDelay = Math.random() * 3 + "s";
+                confettiContainer.appendChild(confettiPiece);
+            }
+        }
+
+        // Show celebration popup and confetti when page loads
+        window.onload = function() {
+            // Display Celebration Popup
+            const celebrationPopup = document.getElementById('celebrationPopup');
+            celebrationPopup.style.display = 'block';
+
+            // Create Confetti Effect
+            createConfetti();
+
+            // Hide Celebration Popup after 5 seconds
+            setTimeout(function() {
+                celebrationPopup.style.display = 'none';
+            }, 5000); // Adjust the timing as needed
+        };
+    </script>
+</body>
+</html>

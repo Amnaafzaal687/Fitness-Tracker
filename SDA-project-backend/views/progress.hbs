@@ -62,21 +62,21 @@
         color: #2046cf;
     }
 
- h1 {
+    h1{
     font-size: 2.5rem;
     color: #333;
     text-align: center;
     margin-bottom: 50px; 
     margin-top: 40px; 
-}
+    }
 
-.chart-container {
+    .chart-container {
     display: flex;
     justify-content: center;
     gap: 50px;
     flex-wrap: wrap;
     margin-bottom: 50px; 
-}
+    }
 
     .chart {
     width: 300px;
@@ -93,12 +93,29 @@
             align-items: center;
         }
     }
+    
+    .message-container {
+    margin-bottom: 20px;
+    text-align: center;
+    }
+
+    .error-message {
+        color: rgb(114, 101, 127);
+        font-size: 18px;
+        font-weight: bold;
+        margin: 10px 0;
+        padding: 10px;
+        background-color:#eaece6; 
+        border: 1px solid rgb(105, 6, 6);    /* Red border */
+        border-radius: 5px;
+    }
 </style>
 <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 <script type="text/javascript">
     window.onload = function () {
-        const progressData = {{{json progressData}}}; // Safely parse progressData
+        const progressData = {{{json progress}}}; 
 
+        // Display Doughnut Charts for Progress
         const chartsConfig = [
             {
                 container: "stepsChart",
@@ -130,11 +147,7 @@
             const chart = new CanvasJS.Chart(config.container, {
                 title: { text: config.title, fontFamily: "Impact", fontWeight: "normal" },
                 legend: { verticalAlign: "bottom", horizontalAlign: "center" },
-                data: [{
-                    type: "doughnut",
-                    showInLegend: true,
-                    dataPoints: config.data
-                }]
+                data: [ { type: "doughnut", showInLegend: true, dataPoints: config.data } ]
             });
             chart.render();
         });
@@ -142,29 +155,35 @@
 </script>
 </head>
 <body>
-  <header>
+<header>
     <div class="logo">
-      <img src="/logo.png" alt="FitStride Logo">
+        <img src="/logo.png" alt="FitStride Logo">
     </div>
     <nav>
-      <a href="/auth/dashboard">Home</a>
-      <a href="/suggestedplan">Suggested Plan</a>
-      <a href="/logaworkoutsession">Log a Workout Session</a>
-      <a href="/logdailyactivity">Log Daily Activity</a>
-      <a href="/auth/progress" style="color: white; background-color: #0a0505; padding: 5px 10px; border-radius: 7px;">Progress</a>
-      <a href="/auth/history">History</a>
-      <a href="/fitnessgoals">Fitness Goals</a>
+        <a href="/auth/dashboard">Home</a>
+        <a href="/suggestedplan">Suggested Plan</a>
+        <a href="/logaworkoutsession">Log a Workout Session</a>
+        <a href="/logdailyactivity">Log Daily Activity</a>
+        <a href="/auth/progress" style="color: white; background-color: #0a0505; padding: 5px 10px; border-radius: 7px;">Progress</a>
+        <a href="/auth/history">History</a>
+        <a href="/auth/checkGoalStatus">Fitness Goals</a>
     </nav>
-  </header>
+</header>
 
-  <!-- Page Heading -->
-  <h1>Progress</h1>
+<h1>Progress</h1>
 
-  <!-- Chart Containers -->
-  <div class="chart-container">
+<div class="message-container">
+    {{#if message}}
+    <h4 class="error-message">{{message}}</h4>
+    {{/if}}
+</div>
+
+
+<!-- Chart Containers -->
+<div class="chart-container">
     <div id="stepsChart" class="chart"></div>
     <div id="caloriesChart" class="chart"></div>
     <div id="waterChart" class="chart"></div>
-  </div>
+</div>
 </body>
 </html>

@@ -28,9 +28,12 @@ router.post('/updateprofile', authenticateUser, (req, res) => {
 // Define the contact route
 router.post('/contact', authController.contact);
 
+router.get('/checkGoalStatus', authenticateUser, authController.checkGoalStatus);
+
 router.post('/fitnessgoals', authenticateUser, authController.fitnessGoals);
 
 router.post('/logdailyactivity', authenticateUser, authController.logDailyActivity);
+
 
 router.get('/progress', authenticateUser, authController.getProgress);
 
