@@ -19,6 +19,7 @@ const Validatepassword = (password) =>{
     return password.length>=6;
 };
 
+
 // Signup Function
 exports.signup = async (req, res) => {
     const { username, email, password, confirm_password } = req.body;
@@ -48,10 +49,10 @@ exports.signup = async (req, res) => {
             });
         }
 
-        // Check if email already exists
+        // Check if email or username already exists
         db.query(
-            'SELECT email FROM users WHERE email = ?',
-            [email],
+            'SELECT * FROM users WHERE email = ? OR name = ?',
+            [email, username],
             async (error, results) => {
                 if (error) {
                     console.error(error);
@@ -61,12 +62,22 @@ exports.signup = async (req, res) => {
                 }
 
                 if (results.length > 0) {
-                    return res.status(400).render('signup', {
-                        message: 'Email is already registered. Please use a different email.'
-                    });
+                    // Check for specific clashes
+                    const existingUser = results[0];
+                    if (existingUser.email === email) {
+                        return res.status(400).render('signup', {
+                            message: 'Email is already registered. Please use a different email.'
+                        });
+                    }
+
+                    if (existingUser.name === username) {
+                        return res.status(400).render('signup', {
+                            message: 'Username is already taken. Please choose a different username.'
+                        });
+                    }
                 }
 
-                // If email does not exist, proceed with registration
+                // If no clashes, proceed with registration
                 const hashedPassword = await bcrypt.hash(password, 8);
 
                 db.query(

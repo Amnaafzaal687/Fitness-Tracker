@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekly Goal</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Roboto, sans-serif;
+    }
+    body {
+        height: 100vh;
+        width: 100vw;
+        background: url('goal.jpg') no-repeat center center;
+        background-size: cover; /* Ensures the image fully covers the screen */
+        background-attachment: fixed; /* Keeps the background fixed */
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden; /* Prevents unnecessary scrollbars */
+    }
+    header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 50px;
+        background-color: rgba(0, 0, 0, 0.5); /* Transparent header background */
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+    }
+    .logo {
+        display: flex;
+        align-items: center;
+    }
+    .logo img {
+        height: 50px;
+        margin-right: 10px;
+    }
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+    nav a {
+        font-size: 16px;
+        text-decoration: none;
+        color: white;
+        font-weight: 400;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 7px;
+        padding: 5px 10px;
+    }
+    nav a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+    .content {
+        background: rgba(0, 0, 0, 0.7);
+        padding: 40px;
+        border-radius: 15px;
+        text-align: center;
+        width: 90%;
+        max-width: 500px;
+        margin-top: 140px; /* Prevent overlap with the header */
+    }
+    .content h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+    .goals {
+        margin: 20px 0;
+        text-align: center;
+    }
+    .goals p {
+        font-size: 18px;
+        margin: 10px 0;
+    }
+    .track-btn {
+        display: inline-block;
+        font-size: 16px;
+        color: white;
+        background: #2046cf;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 20px;
+        transition: background 0.3s;
+    }
+    .track-btn:hover {
+        background: #16349b;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+       <img src="/logo.png" alt="FitStride Logo">
+        <nav>
+            <a href="/auth/dashboard">Home</a>
+            <a href="/suggestedplan">Suggested Plan</a>
+            <a href="/logaworkoutsession">Log a Workout Session</a>
+            <a href="/logdailyactivity">Log Daily Activity</a>
+            <a href="/auth/progress">Progress</a>
+            <a href="/auth/history">History</a>
+            <a href="/fitnessgoals">Fitness Goals</a>
+        </nav>
+</header>
+
+<div class="content">
+    <h1>Your Weekly Goals</h1>
+    <div class="goals">
+        <p><strong>Water Intake:</strong> 3 Liters/day</p>
+        <p><strong>Distance to Cover:</strong> 5 km/day</p>
+        <p><strong>Calories to Burn:</strong> 500 Calories/day</p>
+    </div>
+    <a href="#" class="track-btn">Track Progress</a>
+</div>
+
+</body>
+</html>
