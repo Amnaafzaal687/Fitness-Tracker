@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const emailValidator = require('email-validator'); // Make sure to install this package for email validation
 
 // Database connection setup
 const db = mysql.createConnection({
@@ -185,25 +186,32 @@ exports.login = async (req, res) => {
     }
 };
 
-
-// Reset Password by Username
 exports.forgetPassword = async (req, res) => {
-    const { name, password } = req.body;
+    const { name, email, password } = req.body;
 
-    if (!name || !password) {
+    // Check if all fields are provided
+    if (!name || !email || !password) {
         return res.status(400).render('forget', {
-            message: 'Username and password are required.'
+            message: 'Username, email, and password are required.'
+        });
+    }
+
+    // Validate email format
+    if (!emailValidator.validate(email)) {
+        return res.status(400).render('forget', {
+            message: 'Please enter a valid email address.'
         });
     }
 
     // Validate password length
-    if(!Validatepassword(password)){
+    if (!Validatepassword(password)) {
         return res.status(400).render('forget', {
             message: 'Password must be at least 6 characters long.'
         });
     }
-      // Check if the username exists in the database
-    db.query('SELECT * FROM users WHERE name = ?', [name], async (error, results) => {
+
+    // Check if the user exists in the database by name and email
+    db.query('SELECT * FROM users WHERE name = ? AND email = ?', [name, email], async (error, results) => {
         if (error) {
             console.error(error);
             return res.status(500).render('forget', {
@@ -213,7 +221,7 @@ exports.forgetPassword = async (req, res) => {
 
         if (results.length === 0) {
             return res.status(404).render('forget', {
-                message: 'No user found with that username.'
+                message: 'No user found with that username and email combination.'
             });
         }
 
@@ -233,6 +241,7 @@ exports.forgetPassword = async (req, res) => {
         });
     });
 };
+
 
 // Logout Route
 exports.logout = (req, res) => {
@@ -336,6 +345,7 @@ exports.dashboard = (req, res) => {
                 message: 'No profile found. Please create a profile first.'
             });
         }
+        const profile = profileResult[0]
         // Second query to fetch the user's active goals
         db.query(goalsQuery, [userId], (goalError, goalsResult) => {
             if (goalError) {
@@ -346,10 +356,10 @@ exports.dashboard = (req, res) => {
             }
             if (goalsResult.length === 0) {
                 return res.status(404).render('dashboard', {
-                    message: 'No goal found. Please set goals.'
+                    profile: profile, 
+                    message: 'Welcome to your dashboard!'
                 });
             }
-            const profile = profileResult[0]
             return res.render('dashboard', {
                 goals: goalsResult,
                 profile: profile, 
