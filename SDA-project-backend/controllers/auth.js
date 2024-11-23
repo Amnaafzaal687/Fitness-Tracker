@@ -250,9 +250,10 @@ exports.createProfile = (req, res) => {
         });
     }
 
+    // Check if a profile already exists for the user
     db.query(
-        'INSERT INTO profiles SET ?',
-        { user_id: userId, gender, age, height, weight },
+        'SELECT * FROM profiles WHERE user_id = ?',
+        [userId],
         (error, results) => {
             if (error) {
                 console.error(error);
@@ -260,10 +261,32 @@ exports.createProfile = (req, res) => {
                     message: 'An error occurred. Please try again.'
                 });
             }
-            res.redirect('/auth/dashboard');
+
+            if (results.length > 0) {
+                // If a profile already exists
+                return res.status(400).render('createdprofile', {
+                    message: 'You have already created a profile.'
+                });
+            }
+
+            // If no profile exists, insert the new profile
+            db.query(
+                'INSERT INTO profiles SET ?',
+                { user_id: userId, gender, age, height, weight },
+                (error, results) => {
+                    if (error) {
+                        console.error(error);
+                        return res.status(500).render('createprofile', {
+                            message: 'An error occurred. Please try again.'
+                        });
+                    }
+                    res.redirect('/auth/dashboard'); // Redirect to dashboard after successful profile creation
+                }
+            );
         }
     );
 };
+
 
 exports.dashboard = (req, res) => {
     if (!req.user || !req.user.id) {
