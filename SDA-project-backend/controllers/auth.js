@@ -722,7 +722,6 @@ exports.getProgress = (req, res) => {
         }
 
         const goal = goalResults[0];
-        console.log(goal)
         db.query(fetchDailyActivity, [userId, userId], (activityError, activityResults) => {
             if (activityError) {
                 console.error('Error fetching daily activity:', activityError);
@@ -732,7 +731,6 @@ exports.getProgress = (req, res) => {
             }
 
             const activity = activityResults[0] || { total_steps: 0, total_calories: 0, total_water: 0 };
-            console.log(activity)
             const progressData = {
                 steps: { completed: activity.total_steps, missed: Math.max(goal.steps_goals - activity.total_steps, 0) },
                 calories: { completed: activity.total_calories, missed: Math.max(goal.calories_goals - activity.total_calories, 0) },
