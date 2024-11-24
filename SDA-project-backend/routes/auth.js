@@ -32,8 +32,8 @@ router.get('/checkGoalStatus', authenticateUser, authController.checkGoalStatus)
 
 router.post('/fitnessgoals', authenticateUser, authController.fitnessGoals);
 
+router.get('/logdailyactivity', authenticateUser, authController.logDailyActivity);
 router.post('/logdailyactivity', authenticateUser, authController.logDailyActivity);
-
 
 router.get('/progress', authenticateUser, authController.getProgress);
 
@@ -51,7 +51,12 @@ router.post('/suggestedplan', authenticateUser, (req, res) => {
         viewToRender = 'suggestedplan4';
     } else if (fitnesslevel === 'advance' && workouttype === 'legs') {
         viewToRender = 'suggestedplan3';
-    } else {
+    } else if (fitnesslevel === 'begineer' && workouttype === 'Fb') {
+        viewToRender = 'suggestedplan6';
+    } else if (fitnesslevel === 'advance' && workouttype === 'Fb') {
+        viewToRender = 'suggestedplan5';
+    }
+        else {
         return res.status(400).send('Invalid fitness level or workout type');
     }
 

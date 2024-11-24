@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suggested Plan</title>
+<style> 
+    /* Reset and General Styling */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Roboto, sans-serif;
+    }
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Header Styling */
+    header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 50px;
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+    }
+    .logo {
+        display: flex;
+        align-items: center;
+    }
+    .logo img {
+        height: 50px;
+        margin-right: 10px;
+    }
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    nav a {
+        font-size: 16px;
+        margin: 0 15px;
+        text-decoration: none;
+        color: black;
+        font-weight: 400;
+        border: 1px solid rgb(129, 117, 117);
+        border-radius: 7px;
+        padding: 5px 10px;
+    }
+    nav a:hover {
+        color: #2046cf;
+    }
+    nav a[style] {
+        color: white;
+        background-color: #0a0505;
+        border-radius: 7px;
+    }
+
+    /* Slideshow Full Background */
+    .slideshow-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        z-index: -1; /* Push to background */
+    }
+
+    .slideshow-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        transition: opacity 1.5s ease-in-out;
+    }
+
+    .slide.active {
+        opacity: 1;
+    }.workout-name {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: right;
+    z-index: 1;
+}
+
+    
+    /* Content Section */
+    .content-section {
+        position: relative;
+        z-index: 1;
+        margin-top: 200px; /* Offset header */
+        padding: 20px;
+        border-radius: 10px;
+        width: 80%;
+        text-align: center;
+         margin-left: auto; /* Centers content horizontally */
+        margin-right: auto; /* Centers content horizontally */
+    
+    }
+
+    .content-section h1, .content-section h2 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    /* Card Section Styling */
+    .card-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 40px;
+        margin-top: 20px;
+    }
+
+    .card {
+        background-color: #333; /* Dark theme */
+        color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        text-align: center;
+    }
+
+    .card h3 {
+        margin-bottom: 10px;
+        font-size: 18px;
+        color: #ffdf91; /* Accent color */
+    }
+
+    .card p {
+        font-size: 16px;
+        color: white;
+        margin: 5px 0;
+        text-align: left;
+    }
+</style>
+</head>
+<body>
+<!-- Header Section -->
+<header>
+    <div class="logo">
+        <img src="/logo.png" alt="FitStride Logo">
+        <nav>
+            <a href="/auth/dashboard">Home</a>
+            <a href="/suggestedplan" style="color: white; background-color: #0a0505;">Suggested Plan</a>
+            <a href="/logaworkoutsession">Log a Workout Session</a>
+            <a href="/logdailyactivity">Log Daily Activity</a>
+            <a href="/auth/progress">Progress</a>
+            <a href="/auth/history">History</a>
+            <a href="/auth/checkGoalStatus">Fitness Goals</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Slideshow Full Background -->
+<div class="slideshow-container">
+    <img src="/workout1.jpg" class="slide active" alt="Dumbbell Squats">
+    <img src="/workout2.jpg" class="slide" alt="Romanian Deadlifts">
+    <img src="/workout3.jpg" class="slide" alt="Bench Press">
+    <div class="workout-name" id="workout-name">Dumbbell Squats</div>
+</div>
+
+<!-- Content Section -->
+<div class="content-section">
+    <h1>Full Body Workout</h1>
+    <h2>Level: Advanced</h2>
+    <div class="card-container">
+        <div class="card">
+            <h3>4 sets of 8 reps each</h3>
+            <p>1. Dumbbell Squats</p>
+            <p>2. Romanian Deadlifts</p>
+            <p>3. Dumbbell Bench Press</p>
+            <p>4. Lateral Raises</p>
+        </div>
+        <div class="card">
+            <h3>4 sets of 8 reps each</h3>
+            <p>1. Dumbbell Chest Fly</p>
+            <p>2. Single Leg Deadlifts</p>
+            <p>3. Overhead Press</p>
+            <p>4. Leg Press</p>
+        </div>
+        <div class="card">
+            <h3>4 sets of 8 reps each</h3>
+            <p>1. Bent Over Rows</p>
+            <p>2. Weighted Lunges</p>
+            <p>3. Pull Ups</p>
+            <p>4. Hamstring Curls</p>
+        </div>
+    </div>
+</div>
+
+<script>
+let slideIndex = 0;
+const slides = document.querySelectorAll('.slide');
+const workoutName = document.getElementById('workout-name');
+const workoutNames = ["Lateral Raises", "Squats", "Lunges"];
+
+function showSlides() {
+    slides.forEach((slide, index) => {
+        slide.classList.remove('active');
+    });
+    slideIndex = (slideIndex + 1) % slides.length;
+    slides[slideIndex].classList.add('active');
+    workoutName.textContent = workoutNames[slideIndex];
+    setTimeout(showSlides, 5000); // Change slide every 5 seconds
+}
+
+showSlides();
+</script>
+</body>
+</html>

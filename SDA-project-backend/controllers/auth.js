@@ -590,10 +590,10 @@ exports.checkGoalStatus = (req, res) => {
         }
     });
 };
-
 exports.logDailyActivity = (req, res) => {
     const { caloriesburn, waterintake, steps } = req.body;
 
+    // Check if the user is logged in
     if (!req.user || !req.user.id) {
         return res.status(400).render('logdailyactivity', {
             message: 'You need to be logged in to log your daily activity.'
@@ -602,12 +602,14 @@ exports.logDailyActivity = (req, res) => {
 
     const userId = req.user.id;
 
+    // Validate that all fields are provided
     if (!caloriesburn || !waterintake || !steps) {
         return res.status(400).render('logdailyactivity', {
             message: 'All fields are required.'
         });
     }
 
+    // Insert the new daily activity into the database
     const activityQuery = `
         INSERT INTO daily_activities (user_id, calories_burn, water_intake, steps, created_at)
         VALUES (?, ?, ?, ?, CURDATE());
@@ -621,29 +623,34 @@ exports.logDailyActivity = (req, res) => {
             });
         }
 
-        // Fetch the logged activities for today
-        const fetchTodayActivitiesQuery = `
-            SELECT * FROM daily_activities
+        // Fetch the aggregated sum of daily activities (total for today)
+        const sumQuery = `
+            SELECT 
+                SUM(calories_burn) AS total_calories_burn, 
+                SUM(water_intake) AS total_water_intake, 
+                SUM(steps) AS total_steps
+            FROM daily_activities
             WHERE user_id = ? AND DATE(created_at) = CURDATE();
         `;
-        db.query(fetchTodayActivitiesQuery, [userId], (fetchError, activities) => {
-            if (fetchError) {
-                console.error('Error fetching today\'s activities:', fetchError);
+
+        db.query(sumQuery, [userId], (sumError, results) => {
+            if (sumError) {
+                console.error('Error fetching summed activities:', sumError);
                 return res.status(500).render('logdailyactivity', {
                     message: 'Error fetching daily activities.'
                 });
             }
-            console.log(activities);
+
+            const activitySummary = results[0]; // The summed values for today's activity
+
+            // Render the aggregated data on the frontend
             return res.render('viewdailyactivity', {
-                activities: activities,
+                activities: activitySummary, // Pass the summed data to the view
                 message: 'Daily activity logged successfully!'
             });
         });
     });
 };
-
-
-
 exports.getProgress = (req, res) => {
     const userId = req.user.id;
 
@@ -738,8 +745,7 @@ exports.logWorkoutSession = async (req, res) => {
 //Get user history
 exports.history = async (req, res) => {
     const userId = req.user.id;
-
-    const query = 'SELECT workoutname, duration, sets, date FROM workout_sessions WHERE user_id = ? ORDER BY date DESC';
+    const query = 'SELECT workoutname, duration, sets, date FROM workout_sessions WHERE user_id = ? ORDER BY date DESC'; 
 
     db.query(query, [userId], (error, result) => {
         if (error) {

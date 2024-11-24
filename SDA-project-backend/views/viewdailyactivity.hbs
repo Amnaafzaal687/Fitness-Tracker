@@ -128,27 +128,25 @@
             <a href="/auth/checkGoalStatus" style="color: white; background-color: #0a0505; padding: 5px 10px; border-radius: 7px;">Fitness Goals</a>
         </nav>
 </header>
-
 <div class="content">
     {{#if message}}
         <div class="message-container">
-            <h4 class="error-message">{{message}}</h4>
+            <h4 class="success-message">{{message}}</h4>
         </div>
     {{/if}}
     <h1>Your Daily Activity</h1>
     <div class="activities">
-        {{#if activities.length}}
-            {{#each activities}}
-                <p><strong>Water Intake:</strong> {{this.water_intake}} Liters/day</p>
-                <p><strong>Distance to Cover:</strong> {{this.steps}} km/day</p>
-                <p><strong>Calories to Burn:</strong> {{this.calories_burn}} Calories/day</p>
-            {{/each}}
+        {{#if activities}}
+            <p><strong>Water Intake:</strong> {{activities.total_water_intake}} Liters/day</p>
+            <p><strong>Distance Covered:</strong> {{activities.total_steps}} km/day</p>
+            <p><strong>Calories Burned:</strong> {{activities.total_calories_burn}} Calories/day</p>
         {{else}}
             <p>No activity logged for today.</p>
         {{/if}}
     </div>
     <a href="/auth/logdailyactivity" class="track-btn">Update</a>
 </div>
+
 
 
 </body>
