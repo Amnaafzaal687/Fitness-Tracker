@@ -74,11 +74,11 @@
         font-size: 28px;
         margin-bottom: 20px;
     }
-    .goals {
+    .activities {
         margin: 20px 0;
         text-align: center;
     }
-    .goals p {
+    .activities p {
         font-size: 18px;
         margin: 10px 0;
     }
@@ -136,13 +136,20 @@
         </div>
     {{/if}}
     <h1>Your Daily Activity</h1>
-    <div class="goals">
-        <p><strong>Water Intake:</strong> {{goal.water_goals}} Liters/day</p>
-        <p><strong>Distance to Cover:</strong> {{goal.steps_goals}} km/day</p>
-        <p><strong>Calories to Burn:</strong> {{goal.calories_goals}} Calories/day</p>
+    <div class="activities">
+        {{#if activities.length}}
+            {{#each activities}}
+                <p><strong>Water Intake:</strong> {{this.water_intake}} Liters/day</p>
+                <p><strong>Distance to Cover:</strong> {{this.steps}} km/day</p>
+                <p><strong>Calories to Burn:</strong> {{this.calories_burn}} Calories/day</p>
+            {{/each}}
+        {{else}}
+            <p>No activity logged for today.</p>
+        {{/if}}
     </div>
     <a href="/auth/logdailyactivity" class="track-btn">Update</a>
 </div>
+
 
 </body>
 </html>
