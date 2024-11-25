@@ -105,6 +105,7 @@ exports.signup = async (req, res) => {
     }
 };
 
+//for login
 exports.login = async (req, res) => {
     const { email, password } = req.body;
 
@@ -149,13 +150,13 @@ exports.login = async (req, res) => {
 
         // Create JWT token
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-            expiresIn: process.env.JWT_EXPIRES_IN  // Expires in the time set in your .env file
+            expiresIn: process.env.JWT_EXPIRES_IN  // Expires in the time set in .env file
         });
 
         // Set the JWT token in the cookie
         const cookieOptions = {
             expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),  // Set expiration
-            httpOnly: true,  // Prevents JavaScript from accessing the cookie
+            httpOnly: true, 
         };
 
         // Send JWT token as a cookie
@@ -186,6 +187,7 @@ exports.login = async (req, res) => {
     }
 };
 
+//forget password
 exports.forgetPassword = async (req, res) => {
     const { name, email, password } = req.body;
 
@@ -241,7 +243,6 @@ exports.forgetPassword = async (req, res) => {
         });
     });
 };
-
 
 // Logout Route
 exports.logout = (req, res) => {
@@ -307,6 +308,7 @@ exports.createProfile = (req, res) => {
     );
 };
 
+//to print profile with goal achieved history 
 exports.dashboard = (req, res) => {
     if (!req.user || !req.user.id) {
         return res.status(400).render('login', {
@@ -331,7 +333,7 @@ exports.dashboard = (req, res) => {
         WHERE fitness_goals.user_id = ? AND fitness_goals.achieved = '1' ; 
     `;
 
-    // First query to fetch user profile data
+    // to fetch user profile data
     db.query(profileQuery, [userId], (error, profileResult) => {
         if (error) {
             console.error('Database Error:', error);
@@ -346,7 +348,7 @@ exports.dashboard = (req, res) => {
             });
         }
         const profile = profileResult[0]
-        // Second query to fetch the user's active goals
+        // to fetch the user's active goals
         db.query(goalsQuery, [userId], (goalError, goalsResult) => {
             if (goalError) {
                 console.error('Database Error:', goalError);
@@ -369,7 +371,6 @@ exports.dashboard = (req, res) => {
     });
 };
 
-
 // Update Profile
 exports.updateProfile = (req, res) => {
     const { gender, age, height, weight } = req.body;
@@ -382,7 +383,7 @@ exports.updateProfile = (req, res) => {
 
     const userId = req.user.id;
 
-    // Validation: Check if all fields are filled
+    // Check for if all fields are filled
     if (!gender || !age || !height || !weight) {
         return res.status(400).render('updateprofile', {
             message: 'All fields are required.'
@@ -405,6 +406,8 @@ exports.updateProfile = (req, res) => {
         }
     );
 };
+
+//for contact page to save queries in database
 exports.contact = (req, res) => {
     const { name, email, message } = req.body;
 
@@ -419,10 +422,7 @@ exports.contact = (req, res) => {
             message: 'Invalid email format.'
         });
     }
-
-    // Use an object for the `SET ?` query
     const queryData = { name, email, message };
-
     db.query('INSERT INTO contact_queries SET ?', queryData, (error, results) => {
         if (error) {
             console.error('Error inserting into database:', error);
@@ -430,8 +430,6 @@ exports.contact = (req, res) => {
                 message: 'Failed to insert into database.'
             });
         }
-
-        // Respond with success and redirect
         console.log('Data inserted successfully:', results);
         return res.status(200).send(`
             <style>
@@ -460,6 +458,7 @@ exports.contact = (req, res) => {
     });
 };
 
+//for 1st time goal setup for a week 
 exports.fitnessGoals = (req, res) => {
     const { activity, steps_goals, calories_goals, water_goals } = req.body;
 
@@ -523,7 +522,7 @@ exports.fitnessGoals = (req, res) => {
                     });
                 }
 
-                const goal = goals[0]; // Assuming one result as it's based on `id`
+                const goal = goals[0]; // Assuming one result as it's based on `id` like for a week only 1 goal 
                 return res.render('viewgoal', {
                     message: 'Your current goal!',
                     goal: goal
@@ -533,7 +532,7 @@ exports.fitnessGoals = (req, res) => {
     });
 };
 
-
+//check goal status that goal webpage refers to which page according to achieved and not achieved
 exports.checkGoalStatus = (req, res) => {
     const userId = req.user.id;
 
@@ -572,7 +571,6 @@ exports.checkGoalStatus = (req, res) => {
                     });
                 });
             } else if (goal.achieved === 1) {
-                console.log(goal);
                 return res.render('goalcompleted', {
                     message: 'Congratulations! You achieved your fitness goal!',
                     goal: goal
@@ -591,6 +589,7 @@ exports.checkGoalStatus = (req, res) => {
     });
 };
 
+//functionality to check daily activity enter,goal achieved setup,summed of all previous activities
 exports.logDailyActivity = (req, res) => {
     const { caloriesburn, waterintake, steps } = req.body;
 
@@ -616,7 +615,7 @@ exports.logDailyActivity = (req, res) => {
             });
         }
 
-        // Fetch cumulative activity data for the current day
+        // for fetch cumulative activity data for the current day
         const cumulativeQuery = `
             SELECT SUM(calories_burn) AS total_calories, SUM(water_intake) AS total_water, SUM(steps) AS total_steps
             FROM daily_activities
@@ -701,14 +700,14 @@ exports.logDailyActivity = (req, res) => {
                                 return res.render('viewdailyactivity', {
                                     message: 'Daily activity logged successfully! Goal achieved!',
                                     activities,
-                                    goal
+                                    goal:null
                                 });
                             });
                         } else {
                             return res.render('viewdailyactivity', {
                                 message: 'Daily activity logged successfully. Keep going to achieve your goal!',
                                 activities,
-                                goal
+                                goal:null
                             });
                         }
                     });
@@ -724,6 +723,7 @@ exports.logDailyActivity = (req, res) => {
     });
 };
 
+//to view daily activity direct from click
 exports.viewDailyActivity = (req, res) => {
     if (!req.user || !req.user.id) {
         return res.status(400).render('viewdailyactivity', {
@@ -733,7 +733,7 @@ exports.viewDailyActivity = (req, res) => {
 
     const userId = req.user.id;
 
-    // Query to fetch summed activities for the current day
+    // sum of all activities for the current day
     const fetchActivityQuery = `
         SELECT SUM(steps) AS total_steps, SUM(calories_burn) AS total_calories, SUM(water_intake) AS total_water
         FROM daily_activities
@@ -746,12 +746,10 @@ exports.viewDailyActivity = (req, res) => {
                 message: 'An error occurred while fetching your daily activity.',
             });
         }
-        console.log(results[0]);
         const activities = results[0] || {};
         const totalCalories = activities.total_calories || 0;
         const totalWaterIntake = activities.total_water || 0;
         const totalSteps = activities.total_steps || 0;
-        console.log(totalCalories, totalWaterIntake, totalSteps);
         if (totalCalories === 0 && totalWaterIntake === 0 && totalSteps === 0) {
             return res.render('viewdailyactivity', {
                 message: 'No activity logged for today. Start by logging your daily activity.',
@@ -769,13 +767,12 @@ exports.viewDailyActivity = (req, res) => {
         return res.render('viewdailyactivity', {
             message: 'Here is your logged activity for today.',
             activities: activityData,
-            goal: null, // Optional: Fetch and pass an active goal if necessary
+            goal: null,
         });
     });
 };
 
-
-
+// Track a progress
 exports.getProgress = (req, res) => {
     const userId = req.user.id;
 
@@ -851,10 +848,9 @@ exports.getProgress = (req, res) => {
 // Save a workout session
 exports.logWorkoutSession = async (req, res) => {
     const { workoutname, duration, sets, date } = req.body;
-    const userId = req.user.id; // Assuming `req.user` contains authenticated user data
+    const userId = req.user.id; 
 
     try {
-        // Insert workout session details into the database
         await db.query(
             'INSERT INTO workout_sessions (user_id, workoutname, duration, sets, date) VALUES (?, ?, ?, ?, ?)',
             [userId, workoutname, duration, sets, date]
@@ -866,6 +862,7 @@ exports.logWorkoutSession = async (req, res) => {
         res.status(500).send('An error occurred while logging your workout session.');
     }
 };
+
 //Get user history
 exports.history = async (req, res) => {
     const userId = req.user.id;
