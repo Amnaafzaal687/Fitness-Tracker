@@ -67,6 +67,7 @@ router.post('/suggestedplan', authenticateUser, (req, res) => {
 
 router.post('/logaworkoutsession', authenticateUser, authController.logWorkoutSession);
 
+router.get('/viewdailyactivity', authenticateUser, authController.viewDailyActivity);
 // Route to view workout history
 router.get('/history', authenticateUser, authController.history);
 
