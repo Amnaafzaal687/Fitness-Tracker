@@ -57,10 +57,19 @@ router.get("/suggestedplan3",(req,res)=>{
 router.get("/suggestedplan4",(req,res)=>{
     res.render("suggestedplan4")
 });
+router.get("/suggestedplan5",(req,res)=>{
+    res.render("suggestedplan5")
+});
+router.get("/suggestedplan6",(req,res)=>{
+    res.render("suggestedplan6")
+});
 router.get("/viewgoal",(req,res)=>{
     res.render("viewgoal")
 });
 router.get("/goalcompleted",(req,res)=>{
     res.render("goalcompleted")
+});
+router.get("/viewdailyactivity",(req,res)=>{
+    res.render("viewdailyactivity")
 });
 module.exports = router;

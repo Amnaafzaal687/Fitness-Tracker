@@ -558,7 +558,6 @@ exports.checkGoalStatus = (req, res) => {
             const goalEndDate = new Date(goal.created_at);
             goalEndDate.setDate(goalEndDate.getDate() + 7); // Assuming goal expires in 7 days
             const isGoalExpired = goalEndDate < new Date();
-
             if (isGoalExpired && goal.achieved === 0) {
                 const expireGoalQuery = `
                     UPDATE fitness_goals
@@ -573,6 +572,7 @@ exports.checkGoalStatus = (req, res) => {
                     });
                 });
             } else if (goal.achieved === 1) {
+                console.log(goal);
                 return res.render('goalcompleted', {
                     message: 'Congratulations! You achieved your fitness goal!',
                     goal: goal
@@ -590,7 +590,142 @@ exports.checkGoalStatus = (req, res) => {
         }
     });
 };
+
 exports.logDailyActivity = (req, res) => {
+    const { caloriesburn, waterintake, steps } = req.body;
+
+    // Check if the user is logged in
+    if (!req.user || !req.user.id) {
+        return res.status(400).render('logdailyactivity', {
+            message: 'You need to be logged in to log your daily activity.'
+        });
+    }
+
+    const userId = req.user.id;
+
+    // Validate that all fields are provided
+    if (!caloriesburn || !waterintake || !steps) {
+        return res.status(400).render('logdailyactivity', {
+            message: 'All fields are required.'
+        });
+    }
+
+    // Insert the new daily activity into the database
+    const activityQuery = `
+        INSERT INTO daily_activities (user_id, calories_burn, water_intake, steps, created_at)
+        VALUES (?, ?, ?, ?, CURDATE());
+    `;
+
+    db.query(activityQuery, [userId, caloriesburn, waterintake, steps], (error) => {
+        if (error) {
+            console.error('Database Error:', error);
+            return res.status(500).render('logdailyactivity', {
+                message: 'An error occurred while saving your daily activity.'
+            });
+        }
+
+        // Fetch the user's active fitness goal
+        const fetchGoalQuery = `
+            SELECT id, steps_goals, calories_goals, water_goals, achieved, created_at
+            FROM fitness_goals
+            WHERE user_id = ? AND achieved = 0
+            ORDER BY id DESC
+            LIMIT 1;
+        `;
+
+        db.query(fetchGoalQuery, [userId], (goalError, goals) => {
+            if (goalError) {
+                console.error('Error fetching fitness goals:', goalError);
+                return res.status(500).render('logdailyactivity', {
+                    message: 'Daily activity logged, but unable to fetch goal details.'
+                });
+            }
+
+            if (goals.length > 0) {
+                const goal = goals[0];
+                const goalEndDate = new Date(goal.created_at);
+                goalEndDate.setDate(goalEndDate.getDate() + 7); // Assuming the goal lasts 7 days
+
+                // Fetch the accumulated activities over the goal period
+                const fetchStepsQuery = `
+                    SELECT SUM(steps) AS total_steps, SUM(calories_burn) AS total_calories, SUM(water_intake) AS total_water
+                    FROM daily_activities
+                    WHERE user_id = ? AND DATE(created_at) BETWEEN DATE(?) AND DATE(?);
+                `;
+
+                db.query(fetchStepsQuery, [userId, goal.created_at, goalEndDate], (stepsError, stepsResults) => {
+                    if (stepsError) {
+                        console.error('Error fetching steps data:', stepsError);
+                        return res.status(500).render('logdailyactivity', {
+                            message: 'Error accumulating steps data over the goal period.'
+                        });
+                    }
+
+                    const totalSteps = stepsResults[0]?.total_steps || 0;
+                    const totalCalories = stepsResults[0]?.total_calories || 0;
+                    const totalWaterIntake = stepsResults[0]?.total_water || 0;
+
+                    console.log('Total Steps:', totalSteps);
+                    console.log('Total Calories:', totalCalories);
+                    console.log('Total Water Intake:', totalWaterIntake);
+
+                    const isStepsAchieved = totalSteps >= goal.steps_goals;
+                    const isCaloriesAchieved = totalCalories >= goal.calories_goals;
+                    const isWaterAchieved = totalWaterIntake >= goal.water_goals;
+
+                    console.log('Goal Achieved:', isStepsAchieved && isCaloriesAchieved && isWaterAchieved);
+
+                    if (isStepsAchieved && isCaloriesAchieved && isWaterAchieved) {
+                        const updateGoalQuery = `
+                            UPDATE fitness_goals
+                            SET achieved = 1, achieved_at = NOW()
+                            WHERE id = ?;
+                        `;
+
+                        db.query(updateGoalQuery, [goal.id], (updateError) => {
+                            if (updateError) {
+                                console.error('Error updating goal achievement:', updateError);
+                                return res.status(500).render('logdailyactivity', {
+                                    message: 'Error updating goal status.'
+                                });
+                            }
+                            const activities = {
+                                total_water_intake: totalWaterIntake,
+                                total_steps: totalSteps,
+                                total_calories_burn: totalCalories,
+                            };
+                            return res.render('viewdailyactivity', {
+                                message: 'Daily activity logged successfully! Goal achieved!',
+                                activities:activities ,
+                                goal
+                            });
+                        });
+                    } else {
+                        const activities = {
+                            total_water_intake: totalWaterIntake,
+                            total_steps: totalSteps,
+                            total_calories_burn: totalCalories,
+                        };
+                        return res.render('viewdailyactivity', {
+                            message: 'Daily activity logged successfully. Keep going to achieve your goal!',
+                            activities: activities,
+                            goal
+                        });
+                    }
+                });
+            } else {
+                return res.render('viewdailyactivity', {
+                    message: 'Daily activity logged successfully. No active goals to check.',
+                    activities: null,
+                    goal: null
+                });
+            }
+        });
+    });
+};
+
+
+/*exports.logDailyActivity = (req, res) => {
     const { caloriesburn, waterintake, steps } = req.body;
 
     // Check if the user is logged in
@@ -650,7 +785,8 @@ exports.logDailyActivity = (req, res) => {
             });
         });
     });
-};
+};*/
+
 exports.getProgress = (req, res) => {
     const userId = req.user.id;
 
@@ -685,7 +821,6 @@ exports.getProgress = (req, res) => {
                 message: 'Error fetching fitness goals.'
             });
         }
-
         if (goalResults.length === 0) {
             return res.render('progress', {
                 message: 'No active fitness goals found. Set a new goal to start tracking your progress!',
