@@ -117,7 +117,8 @@
     }
 
     .content-section h1, .content-section h2 {
-        color: #333;
+
+        color:white;
         margin-bottom: 20px;
     }
 
@@ -182,7 +183,7 @@
 <!-- Content Section -->
 <div class="content-section">
     <h1>Full Body Workout</h1>
-    <h2>Level: Advanced</h2>
+    <h2>Level: Advance</h2>
     <div class="card-container">
         <div class="card">
             <h3>4 sets of 8 reps each</h3>
@@ -221,7 +222,7 @@ function showSlides() {
     slideIndex = (slideIndex + 1) % slides.length;
     slides[slideIndex].classList.add('active');
     workoutName.textContent = workoutNames[slideIndex];
-    setTimeout(showSlides, 5000); // Change slide every 5 seconds
+    setTimeout(showSlides, 3000); 
 }
 
 showSlides();

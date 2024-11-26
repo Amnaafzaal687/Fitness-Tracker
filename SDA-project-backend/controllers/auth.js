@@ -880,7 +880,28 @@ exports.history = async (req, res) => {
             return res.status(404).render('history', {
                 message: 'No history found. Please log a workout session.'
             });
-        }
-        return res.render('history', {workouts: result});
+        } 
+        const formattedResults = result.map(row => {
+            if (row.date) {
+                // Ensure row.date is a Date object before formatting
+                const dateObj = new Date(row.date);
+                const day = String(dateObj.getDate()).padStart(2, '0'); // Get day with leading zero
+                const month = String(dateObj.getMonth() + 1).padStart(2, '0'); // Get month with leading zero
+                const year = dateObj.getFullYear(); // Get full year
+
+                // Format as 'dd-mm-yyyy'
+                return {
+                    ...row,
+                    date: `${day}-${month}-${year}`
+                };
+            } else {
+                // If no date is available, return the row without modification
+                return { ...row, date: null };
+            }
+        });
+
+
+        return res.render('history', { workouts: formattedResults });
     });
+
 };

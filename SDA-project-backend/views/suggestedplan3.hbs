@@ -1,3 +1,9 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suggested Plan</title>
 <style> 
     /* Reset and General Styling */
     * {
@@ -7,11 +13,8 @@
         font-family: Roboto, sans-serif;
     }
     body {
-        background-color: #f5f5f5;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding-top: 100px; /* Offset for fixed header */
+        margin: 0;
+        padding: 0;
     }
 
     /* Header Styling */
@@ -60,76 +63,103 @@
         border-radius: 7px;
     }
 
-    /* Page Content Styling */
-    h1 {
-        margin: 50px 0;
+    /* Slideshow Full Background */
+    .slideshow-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        z-index: -1; /* Push to background */
+    }
+
+    .slideshow-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        transition: opacity 1.5s ease-in-out;
+    }
+
+    .slide.active {
+        opacity: 1;
+    }.workout-name {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: right;
+    z-index: 1;
+}
+
+    
+    /* Content Section */
+    .content-section {
+        position: relative;
+        z-index: 1;
+        margin-top: 200px; /* Offset header */
+        padding: 20px;
+        border-radius: 10px;
+        width: 80%;
         text-align: center;
-        font-size: 28px;
-        color: #333;
+        margin-left: auto; /* Centers content horizontally */
+        margin-right: auto; /* Centers content horizontally */
+    
     }
 
-    .info-container {
-        display: flex;
-        align-items: center; /* Align image and text vertically */
-        gap: 20px; /* Add spacing between image and text */
-        margin: 20px 0;
+    .content-section h1, .content-section h2 {
+
+        color: rgba(0, 0, 0, 0.6);
+        margin-bottom: 20px;
     }
 
-    .info-container img {
-        width: 300px; /* Adjust image size */
-        height: auto; /* Maintain aspect ratio */
-    }
-
-    .info-text h2 {
-        font-size: 24px;
-        font-weight: 700;
-        color: black;
-    }
-
-    .info-text h3 {
-        margin-top: 10px;
-        font-size: 18px;
-        font-weight: 700;
-        color: rgb(65, 12, 12);
-    }
-
-    /* Card Container Styling */
+    /* Card Section Styling */
     .card-container {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
-        gap: 60px;
+        gap: 40px;
         margin-top: 20px;
     }
+   .card {
+    background-color: rgba(13, 48, 64, 0.85); /* Semi-transparent dark background */
+    color: white; /* White text for readability */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    width: 300px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+}
 
-    /* Individual Card Styling */
-    .card {
-        background-color: #CCE5E3;
-        padding: 60px;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        width: 300px;
-        text-align: center;
+    .card:hover {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3); /* More pronounced shadow */
     }
+
+
     .card h3 {
-        margin-bottom: 10px;
-        font-size: 18px;
-        color: #333;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #d4af37; /* Accent color */
     }
+
     .card p {
         font-size: 16px;
-        color: #555;
+        color: #f9f9f9;
         margin: 5px 0;
         text-align: left;
     }
 </style>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Suggested Plan</title>
 </head>
 <body>
 <!-- Header Section -->
@@ -148,18 +178,19 @@
     </div>
 </header>
 
-<!-- Main Content -->
-<h1>Suggested Workout Plan</h1>
-
-<!-- Image and Text Section -->
-<div class="info-container">
-    <img src="/legsnew.png" alt="leg pic">
-    <div class="info-text">
-        <h2>Type: Legs</h2>
-        <h3>Level: Advance</h3>
-    </div>
+<!-- Slideshow Full Background -->
+<div class="slideshow-container">
+    <img src="/single.jpg" class="slide active" alt="Dumbbell Squats">
+    <img src="/glute.jpg" class="slide" alt="Romanian Deadlifts">
+    <img src="/deadlift.jpg" class="slide" alt="Bench Press">
+    <div class="workout-name" id="workout-name">Dumbbell Squats</div>
 </div>
 
+<!-- Content Section -->
+<div class="content-section">
+    <h1>Legs Workout</h1>
+    <h2>Level: Advance</h2>
+    
 <!-- Cards Section -->
 <div class="card-container">
     <div class="card">
@@ -167,7 +198,7 @@
         <p>1. Lunges</p>
         <p>2. Squats</p>
         <p>3. Hip thrusts</p>
-        <p>4. Signle Leg Deadlift</p>
+        <p>4. Single Leg Deadlift</p>
     </div>
     <div class="card">
         <h3>4 sets of 8 reps each</h3>
@@ -184,5 +215,25 @@
         <p>4. Romanian Deadlifts</p>
     </div>
 </div>
+</div>
+
+<script>
+let slideIndex = 0;
+const slides = document.querySelectorAll('.slide');
+const workoutName = document.getElementById('workout-name');
+const workoutNames = ["Single Leg Deadlifts", "Glute Raises", "Romanian Deadlift"];
+
+function showSlides() {
+    slides.forEach((slide, index) => {
+        slide.classList.remove('active');
+    });
+    slideIndex = (slideIndex + 1) % slides.length;
+    slides[slideIndex].classList.add('active');
+    workoutName.textContent = workoutNames[slideIndex];
+    setTimeout(showSlides, 3000); 
+}
+
+showSlides();
+</script>
 </body>
 </html>
