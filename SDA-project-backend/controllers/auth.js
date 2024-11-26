@@ -752,7 +752,7 @@ exports.viewDailyActivity = (req, res) => {
         const totalSteps = activities.total_steps || 0;
         if (totalCalories === 0 && totalWaterIntake === 0 && totalSteps === 0) {
             return res.render('viewdailyactivity', {
-                message: 'No activity logged for today. Start by logging your daily activity.',
+                message: 'Start by logging your daily activity.',
                 activities: null,
                 goal: null, // Optional: Pass active goal if required
             });
