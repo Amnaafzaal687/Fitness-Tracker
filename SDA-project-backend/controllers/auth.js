@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const emailValidator = require('email-validator'); // Make sure to install this package for email validation
+const emailValidator = require('email-validator'); // package for email validation
 
 // Database connection setup
 const db = mysql.createConnection({
