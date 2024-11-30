@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Suggested Plan</title>
-<style> 
+<style>
     /* Reset and General Styling */
     * {
         margin: 0;
@@ -87,21 +87,22 @@
 
     .slide.active {
         opacity: 1;
-    }.workout-name {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: right;
-    z-index: 1;
-}
+    }
 
-    
+    .workout-name {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: right;
+        z-index: 1;
+    }
+
     /* Content Section */
     .content-section {
         position: relative;
@@ -111,15 +112,21 @@
         border-radius: 10px;
         width: 80%;
         text-align: center;
-         margin-left: auto; /* Centers content horizontally */
-        margin-right: auto; /* Centers content horizontally */
-    
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .content-section .heading-box {
+        position: relative;
+        display: inline-block;
+        background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+        border-radius: 10px; /* Optional: Rounded corners */
+        padding: 20px;
     }
 
     .content-section h1, .content-section h2 {
-
-        color:#f1d07c;
-        margin-bottom: 20px;
+        color: #f1d07c;
+        margin: 0;
     }
 
     /* Card Section Styling */
@@ -182,31 +189,33 @@
 
 <!-- Content Section -->
 <div class="content-section">
-    <h1>Arms Workout</h1>
-    <h2>Level: Beginner</h2>
+    <div class="heading-box">
+        <h1>Arms Workout</h1>
+        <h2>Level: Beginner</h2>
+    </div>
     <div class="card-container">
-    <div class="card">
-        <h3>3 sets of 12 reps each</h3>
-        <p>1. Bicep Curls</p>
-        <p>2. Tricep Dips</p>
-        <p>3. Hammer Curls</p>
-        <p>4. Overhead Tricep Extension</p>
+        <div class="card">
+            <h3>3 sets of 12 reps each</h3>
+            <p>1. Bicep Curls</p>
+            <p>2. Tricep Dips</p>
+            <p>3. Hammer Curls</p>
+            <p>4. Overhead Tricep Extension</p>
+        </div>
+        <div class="card">
+            <h3>3 sets of 12 reps each</h3>
+            <p>1. Incline Dumbbell Curls</p>
+            <p>2. Skull Crushers</p>
+            <p>3. Concentration Curls</p>
+            <p>4. Push Ups</p>
+        </div>
+        <div class="card">
+            <h3>3 sets of 12 reps each</h3>
+            <p>1. Inclined Rows</p>
+            <p>2. Bench Press</p>
+            <p>3. Triceps Kickbacks</p>
+            <p>4. Overhead Press</p>
+        </div>
     </div>
-    <div class="card">
-        <h3>3 sets of 12 reps each</h3>
-        <p>1. Incline Dumbbell Curls</p>
-        <p>2. Skull Crushers</p>
-        <p>3. Concentration Curls</p>
-        <p>4. Push Ups</p>
-    </div>
-    <div class="card">
-        <h3>3 sets of 12 reps each</h3>
-        <p>1. Inclined Rows</p>
-        <p>2. Bench Press</p>
-        <p>3. Triceps Kickbacks</p>
-        <p>4. Overhead Press</p>
-    </div>
-</div>
 </div>
 
 <script>
@@ -214,7 +223,6 @@ let slideIndex = 0;
 const slides = document.querySelectorAll('.slide');
 const workoutName = document.getElementById('workout-name');
 const workoutNames = ["Shoulder Press", "Bicep Curls", "Triceps Pushdown"];
-
 
 function showSlides() {
     slides.forEach((slide, index) => {
