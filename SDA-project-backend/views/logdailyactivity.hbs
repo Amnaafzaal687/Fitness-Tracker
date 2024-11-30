@@ -147,7 +147,14 @@
             </nav>
         </div>
     </header>
-    <h1>Log Daily Activity</h1>
+    <h1 style="margin-top: 80px; margin-bottom: 10px;">Log Daily Activity</h1>
+    <div class="button-row" style="margin-bottom: 20px; text-align: center;">
+        <a href="/auth/viewdailyactivity" 
+        style="display: inline-block; padding: 12px 25px; background-color: #000; color: white; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 16px; transition: background-color 0.3s;">
+            View Daily Activity
+        </a>
+    </div>
+
     <!-- Form Section -->
     <div class="form-container">
         <form action="/auth/logdailyactivity" method="POST">
@@ -164,9 +171,6 @@
                 <button type="submit">Save</button>
             </div>
         </form>
-        <div class="button-row">
-            <a href="/auth/viewdailyactivity">View Daily Activity</a>
-        </div>
     </div>
 </body>
 

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Weekly Goal</title>
 <style>
-    * {
+     * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
@@ -23,13 +23,16 @@
         align-items: center;
         overflow: hidden;
     }
+
+    /* Header Styling */
     header {
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 20px 50px;
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         position: fixed;
         top: 0;
         left: 0;
@@ -46,20 +49,20 @@
     nav {
         display: flex;
         flex-wrap: wrap;
-        justify-content: flex-end;
-        gap: 10px;
+        justify-content: space-between;
     }
     nav a {
         font-size: 16px;
+        margin: 0 15px;
         text-decoration: none;
-        color: white;
+        color: black;
         font-weight: 400;
-        border: 1px solid rgba(255, 255, 255, 0.5);
+        border: 1px solid rgb(129, 117, 117);
         border-radius: 7px;
         padding: 5px 10px;
     }
     nav a:hover {
-        background-color: rgba(255, 255, 255, 0.2);
+        color: #2046cf;
     }
     .content {
         background: rgba(0, 0, 0, 0.7);
