@@ -85,61 +85,75 @@ exports.logout = (req, res) => {
     }
 };
 
-exports.createProfile = (req, res) => {
-    const { gender, age, height, weight } = req.body;
+// Controller to handle profile creation
+exports.createProfile = async (req, res) => {
+    try {
+        const { gender, age, height, weight } = req.body;
 
-    if (!req.user || !req.user.id) {
-        return res.status(400).render('createprofile', {
-            message: 'User not authenticated. Please log in again.'
-        });
-    }
-
-    const userId = req.user.id;
-
-    // Check if all fields are provided
-    if (!gender || !age || !height || !weight) {
-        return res.status(400).render('createprofile', {
-            message: 'All fields are required.'
-        });
-    }
-
-    // Check if a profile already exists for the user
-    db.query(
-        'SELECT * FROM profiles WHERE user_id = ?',
-        [userId],
-        (error, results) => {
-            if (error) {
-                console.error('Database Error:', error);
-                return res.status(500).render('createprofile', {
-                    message: 'An error occurred while checking the profile.'
-                });
-            }
-
-            if (results.length > 0) {
-                // If a profile already exists
-                return res.status(400).render('createprofile', {
-                    message: 'You have already created a profile.'
-                });
-            }
-
-            // If no profile exists, insert the new profile
-            db.query(
-                'INSERT INTO profiles (user_id, gender, age, height, weight) VALUES (?, ?, ?, ?, ?)',
-                [userId, gender, age, height, weight],
-                (error, results) => {
-                    if (error) {
-                        console.error('Error inserting profile:', error);
-                        return res.status(500).render('createprofile', {
-                            message: 'An error occurred while saving the profile.'
-                        });
-                    }
-                    // Redirect to the dashboard after successful profile creation
-                    res.redirect('/auth/dashboard');
-                }
-            );
+        if (!req.user || !req.user.id) {
+            return res.status(400).render('createprofile', {
+                message: 'User not authenticated. Please log in again.',
+            });
         }
-    );
+
+        const userId = req.user.id;
+
+        // Check if all fields are provided
+        if (!gender || !age || !height || !weight) {
+            return res.status(400).render('createprofile', {
+                message: 'All fields are required.',
+            });
+        }
+
+        // Check if a profile already exists for the user
+        const existingProfile = await profileService.checkProfileExists(userId);
+
+        if (existingProfile.length > 0) {
+            return res.status(400).render('createprofile', {
+                message: 'You have already created a profile.',
+            });
+        }
+
+        // If no profile exists, create a new one
+        const profileData = { gender, age, height, weight };
+        await profileService.createProfile(userId, profileData);
+
+        // Redirect to the dashboard after successful profile creation
+        res.redirect('/auth/dashboard');
+    } catch (error) {
+        console.error('Error creating profile:', error.message);
+        return res.status(500).render('createprofile', {
+            message: 'An error occurred while saving the profile.',
+        });
+    }
 };
+
+// Controller to handle profile updates
+exports.updateProfile = async (req, res) => {
+    try {
+        const { gender, age, height, weight } = req.body;
+
+        if (!req.user || !req.user.id) {
+            return res.status(400).render('updateprofile', {
+                message: 'User not authenticated. Please log in again.',
+            });
+        }
+
+        const userId = req.user.id;
+
+        // Update the user's profile
+        await profileService.updateProfile(userId, { gender, age, height, weight });
+
+        // Redirect to the dashboard after a successful update
+        res.redirect('/auth/dashboard');
+    } catch (error) {
+        console.error('Error updating profile:', error.message);
+        return res.status(500).render('updateprofile', {
+            message: 'An error occurred while updating the profile.',
+        });
+    }
+};
+
 
 exports.dashboard = async (req, res) => {
     try {
@@ -172,31 +186,6 @@ exports.dashboard = async (req, res) => {
         console.error('Dashboard Error:', error);
         return res.status(500).render('dashboard', {
             message: 'An error occurred while loading your dashboard.'
-        });
-    }
-};
-
-// Update Profile Controller
-exports.updateProfile = async (req, res) => {
-    try {
-        if (!req.user || !req.user.id) {
-            return res.status(401).render('updateprofile', {
-                message: 'User not authenticated. Please log in again.'
-            });
-        }
-
-        const userId = req.user.id;
-        const { gender, age, height, weight } = req.body;
-
-        // Call service to update profile
-        await profileService.updateProfile(userId, { gender, age, height, weight });
-
-        // Redirect after success
-        res.redirect('/auth/dashboard');
-    } catch (error) {
-        console.error('Update Profile Error:', error.message);
-        res.status(400).render('updateprofile', {
-            message: error.message || 'An error occurred while updating your profile.'
         });
     }
 };

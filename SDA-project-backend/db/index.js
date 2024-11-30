@@ -34,6 +34,5 @@ const queryDatabase  = (query, params) => {
 };
 
 // Export the connection instance
-module.exports = db;
-module.exports = {queryDatabase};
+module.exports = {db,queryDatabase};
 

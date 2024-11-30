@@ -1,21 +1,21 @@
-const mysql = require('mysql');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const { queryDatabase } = require('../db');
-const db = require('../db');
+const { queryDatabase } = require('../db'); // Import queryDatabase directly
 
 class ProfileService {
+    // Check if a profile exists for a user
     async checkProfileExists(userId) {
         const query = 'SELECT * FROM profiles WHERE user_id = ?';
         return await queryDatabase(query, [userId]);
     }
 
+    // Create a new profile for a user
     async createProfile(userId, profileData) {
         const query = 'INSERT INTO profiles SET ?';
         return await queryDatabase(query, { user_id: userId, ...profileData });
     }
 
+    // Update an existing profile for a user
     async updateProfile(userId, { gender, age, height, weight }) {
+        // Validate required fields
         if (!gender || !age || !height || !weight) {
             throw new Error('All fields are required.');
         }
@@ -28,7 +28,8 @@ class ProfileService {
         const params = [gender, age, height, weight, userId];
 
         try {
-            const results = await db.queryDatabase(query, params);
+            // Use queryDatabase to execute the update query
+            const results = await queryDatabase(query, params);
             return results;
         } catch (error) {
             throw new Error('Database update error: ' + error.message);
