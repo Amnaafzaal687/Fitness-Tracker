@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Suggested Plan</title>
 <style> 
-    /* Reset and General Styling */
     * {
         margin: 0;
         padding: 0;
@@ -16,8 +15,6 @@
         margin: 0;
         padding: 0;
     }
-
-    /* Header Styling */
     header {
         width: 100%;
         display: flex;
@@ -71,7 +68,7 @@
         width: 100vw;
         height: 100vh;
         overflow: hidden;
-        z-index: -1; /* Push to background */
+        z-index: -1; 
     }
 
     .slideshow-container img {
@@ -91,7 +88,7 @@
     position: absolute;
     bottom: 20px;
     right: 20px;
-    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.7); 
     color: white;
     padding: 10px 15px;
     border-radius: 5px;
@@ -106,13 +103,13 @@
     .content-section {
         position: relative;
         z-index: 1;
-        margin-top: 200px; /* Offset header */
+        margin-top: 200px; 
         padding: 20px;
         border-radius: 10px;
         width: 80%;
         text-align: center;
-         margin-left: auto; /* Centers content horizontally */
-        margin-right: auto; /* Centers content horizontally */
+         margin-left: auto; 
+        margin-right: auto; 
     
     }
 
@@ -208,12 +205,11 @@
     </div>
 </div>
 </div>
-
 <script>
 let slideIndex = 0;
 const slides = document.querySelectorAll('.slide');
 const workoutName = document.getElementById('workout-name');
-const workoutNames = ["Lateral Raises", "Squats", "Lunges"];
+const workoutNames = ["Shoulder Press", "Bicep Curls", "Triceps Pushdown"];
 
 function showSlides() {
     slides.forEach((slide, index) => {

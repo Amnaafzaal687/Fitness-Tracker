@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+
     <style>
         /* Reset and General Styling */
         * {
@@ -95,44 +90,44 @@
             background: linear-gradient(90deg, #ff9a9e, #fad0c4);
             border: 1px solid #ff7585;
             color: #662d34;
+                }
+        .profile-details {
+            display: grid;
+            grid-template-columns: 120px 1fr; 
+            gap: 50px; 
+            padding: 20px;
+            border: 1px dashed #CCE5E3;
+            border-radius: 10px;
+            align-items: start; 
         }
-.profile-details {
-    display: grid;
-    grid-template-columns: 120px 1fr; /* First column for image, second for details */
-    gap: 50px; /* Space between columns */
-    padding: 20px;
-    border: 1px dashed #CCE5E3;
-    border-radius: 10px;
-    align-items: start; /* Align content at the top */
-}
 
-.profile-picture {
-    display: flex;
-    justify-content: center; /* Center the picture horizontally */
-    align-items: center; /* Center the picture vertically */
-}
+        .profile-picture {
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+        }
 
-.profile-picture img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%; /* Circular picture */
-    border: 2px solid #CCE5E3; /* Border styling */
-    object-fit: cover;
-}
+        .profile-picture img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%; 
+            border: 2px solid #CCE5E3; 
+            object-fit: cover;
+        }
 
-.profile-info {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Two columns for details */
-    gap: 20px 20px; /* Row and column gap */
-}
+        .profile-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr; 
+            gap: 20px 20px; 
+        }
 
-.profile-info p {
-    margin: 0;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 1.5;
-    text-align: left;
-}
+        .profile-info p {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.5;
+            text-align: left;
+        }
 
         /* Goal Section */
         .goal-container {
@@ -189,7 +184,7 @@
         }
 
         .history-table thead {
-            background: linear-gradient(90deg, #ff9a9e, #fad0c4); /* Message box gradient */
+            background: linear-gradient(90deg, #ff9a9e, #fad0c4); 
             color:  #662d34;
             text-transform: uppercase;
         }
@@ -209,7 +204,7 @@
         }
 
         .history-table tbody tr:hover {
-            background: linear-gradient(90deg, #fce3e6, #ffe5ea); /* Subtle gradient hover effect */
+            background: linear-gradient(90deg, #fce3e6, #ffe5ea); 
         }
 
         .history-table tbody tr:last-child td {
@@ -232,6 +227,12 @@
 
 
     </style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
 </head>
 <body>
 
