@@ -244,115 +244,113 @@
         line-height: 1.5;
     }
 /* Media Queries for Responsiveness */
-@media (max-width: 768px) {
-    header {
-        padding: 10px;
-        flex-direction: column;
-        align-items: flex-start;
+    @media (max-width: 768px) {
+        header {
+            padding: 10px;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        nav {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        nav a {
+            font-size: 16px;
+        }
+
+        .signup-section {
+            display: flex;
+            justify-content: space-between;
+            padding: 50px 20px; 
+            background-color: #cce5e3;
+            border-radius: 20px;
+            margin-top: 20px;   
+        }
+
+        .signup-text h2 {
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .signup-text p {
+            text-align: center;
+        }
+
+        .signup-images img {
+            width: 120px;
+            height: 120px;
+        }
+
+        .action-section {
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .action-zone {
+            width: 100%; 
+            position: relative;
+            padding: 20px;
+        }
+
+        .goals-menu {
+            width: 100%; 
+            margin-top: 20px;
+            background-color: #ffecb3;
+            padding: 20px;
+        }
+
+        /* Actionzone button adjustments */
+        .actionzone-button {
+            position: relative;
+            z-index: 2;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 28px;
+            margin-top: 20px; 
+            width: 100%; 
+            text-align: center; 
+            box-sizing: border-box;
+        }
+
+        .goals-menu a {
+            font-size: 18px;
+            padding: 15px;
+        }
+
+        .smallframe img {
+            width: 100%; 
+        }
     }
 
-    nav {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 5px;
-        margin-top: 10px;
+    @media (max-width: 480px) {
+        nav a {
+            font-size: 14px;
+            padding: 5px 10px;
+        }
+
+        .signup-text h2 {
+            font-size: 20px;
+        }
+
+        .signup-text button {
+            font-size: 16px;
+            padding: 8px 20px;
+        }
+
+        .goals-menu {
+            padding: 15px;
+        }
+
+        .actionzone-button {
+            font-size: 26px; 
+        }
     }
-
-    nav a {
-        font-size: 16px;
-    }
-
-    .signup-section {
-        display: flex;
-        justify-content: space-between;
-        padding: 50px 20px; 
-        background-color: #cce5e3;
-        border-radius: 20px;
-        margin-top: 20px;   
-    }
-
-    .signup-text h2 {
-        font-size: 24px;
-        text-align: center;
-    }
-
-    .signup-text p {
-        text-align: center;
-    }
-
-    .signup-images img {
-        width: 120px;
-        height: 120px;
-    }
-
-    .action-section {
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .action-zone {
-        width: 100%; 
-        position: relative;
-        padding: 20px;
-    }
-
-    .goals-menu {
-        width: 100%; 
-        margin-top: 20px;
-        background-color: #ffecb3;
-        padding: 20px;
-    }
-
-    /* Actionzone button adjustments */
-    .actionzone-button {
-        position: relative;
-        z-index: 2;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 28px;
-        margin-top: 20px; 
-        width: 100%; 
-        text-align: center; 
-        box-sizing: border-box;
-    }
-
-    .goals-menu a {
-        font-size: 18px;
-        padding: 15px;
-    }
-
-    .smallframe img {
-        width: 100%; 
-    }
-}
-
-@media (max-width: 480px) {
-    nav a {
-        font-size: 14px;
-        padding: 5px 10px;
-    }
-
-    .signup-text h2 {
-        font-size: 20px;
-    }
-
-    .signup-text button {
-        font-size: 16px;
-        padding: 8px 20px;
-    }
-
-    .goals-menu {
-        padding: 15px;
-    }
-
-    .actionzone-button {
-        font-size: 26px; 
-    }
-}
-
-
 </style>
 <!DOCTYPE html>
 <html lang="en">
