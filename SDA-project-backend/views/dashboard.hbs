@@ -225,6 +225,74 @@
             margin: 0;
         }
 
+    /* Media Query for Small Screens */
+    @media screen and (max-width: 768px) {
+
+        .profile-container {
+            width: 95%;
+            padding: 20px;
+        }
+
+        .profile-details {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .profile-picture {
+            justify-content: flex-start;
+        }
+
+        .profile-info {
+            grid-template-columns: 1fr;
+        }
+
+        .goal-container {
+            padding: 15px;
+        }
+
+        .history-table th, .history-table td {
+            font-size: 14px;
+            padding: 10px;
+        }
+
+        .profile-buttons {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 10px;
+        }
+
+        .profile-buttons button {
+            padding: 10px;
+            font-size: 14px;
+        }
+    }
+
+    /* Media Query for Extra Small Screens */
+    @media screen and (max-width: 480px) {
+
+        .profile-header {
+            font-size: 24px;
+        }
+
+        .history-table th, .history-table td {
+            font-size: 12px;
+            padding: 8px;
+        }
+
+        .profile-buttons button {
+            font-size: 12px;
+        }
+    }
+    @media screen and (max-width: 768px) {
+        body {
+            padding-top: 170px;
+        }
+        
+        .profile-buttons {
+            flex-direction: column;
+            align-items: stretch;
+        }
+    }
 
     </style>
 <!DOCTYPE html>
