@@ -10,9 +10,6 @@ const progressService = require('../services/progressService');
 const workoutService = require('../services/workoutService');
 const workoutPlanService = require('../services/workoutPlanService');
 
-const { validateProfileData } = require('../utils/validators');
-const db = require('../db');
-
 
 // Signup Controller
 exports.signup = async (req, res) => {
@@ -65,7 +62,7 @@ exports.forgetPassword = async (req, res) => {
             return res.status(result.status).render('forget', { message: result.message });
         }
 
-        return res.redirect('/login'); // Redirect to login on success
+        return res.redirect('/login');
     } catch (error) {
         console.error('Forget Password Error:', error);
         return res.status(500).render('forget', { message: 'An error occurred. Please try again.' });
@@ -144,7 +141,6 @@ exports.updateProfile = async (req, res) => {
         // Update the user's profile
         await profileService.updateProfile(userId, { gender, age, height, weight });
 
-        // Redirect to the dashboard after a successful update
         res.redirect('/auth/dashboard');
     } catch (error) {
         console.error('Error updating profile:', error.message);
@@ -194,7 +190,6 @@ exports.contact = async (req, res) => {
     try {
         const { name, email, message } = req.body;
 
-        // Call service to save contact query
         await contactService.saveContactQuery({ name, email, message });
 
         // Success message
@@ -243,7 +238,6 @@ exports.fitnessGoals = async (req, res) => {
 
         const userId = req.user.id;
 
-        // Check if all required fields are filled
         if (!activity || !steps_goals || !calories_goals || !water_goals) {
             return res.status(400).render('fitnessgoals', {
                 message: 'All fields are required to save your fitness goals.'
@@ -355,6 +349,7 @@ exports.logDailyActivity = async (req, res) => {
 
         // Fetch cumulative activity for the day
         const cumulativeData = await dailyActivityService.getCumulativeActivity(userId);
+        
         const activities = {
             total_water_intake: cumulativeData.total_water || 0,
             total_steps: cumulativeData.total_steps || 0,
@@ -459,6 +454,7 @@ exports.getProgress = async (req, res) => {
 
         // Fetch daily activity data
         const activity = await progressService.getDailyActivity(userId, activeGoal.created_at);
+        
         const progressData = {
             steps: { completed: activity.total_steps, missed: Math.max(activeGoal.steps_goals - activity.total_steps, 0) },
             calories: { completed: activity.total_calories, missed: Math.max(activeGoal.calories_goals - activity.total_calories, 0) },
@@ -532,12 +528,11 @@ exports.getSuggestedPlan = (req, res) => {
     const { fitnesslevel, workouttype } = req.body;
 
     try {
-        // Use the service to get the view based on the user's input
+        // Using workoutPlanService to get the view based on the user's input
         const viewToRender = workoutPlanService.getSuggestedPlan(fitnesslevel, workouttype);
         
-        // Render the appropriate view
         res.render(viewToRender);
     } catch (error) {
-        return res.status(400).send(error.message);  // Handle invalid input gracefully
+        return res.status(400).send(error.message); 
     }
 };
