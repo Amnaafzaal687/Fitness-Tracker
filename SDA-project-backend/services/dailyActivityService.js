@@ -33,7 +33,7 @@ class DailyActivityService {
             LIMIT 1;
         `;
         const results = await db.queryDatabase(query, [userId]);
-        return results[0]; // Returns the active goal or undefined if none exists
+        return results[0]; 
     }
 
     // Fetch cumulative activity data for a fitness goal period

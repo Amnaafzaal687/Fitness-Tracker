@@ -15,7 +15,6 @@ class ProfileService {
 
     // Update an existing profile for a user
     async updateProfile(userId, { gender, age, height, weight }) {
-        // Validate required fields
         if (!gender || !age || !height || !weight) {
             throw new Error('All fields are required.');
         }

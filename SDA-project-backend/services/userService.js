@@ -2,26 +2,26 @@ const { queryDatabase } = require('../db');
 const bcrypt = require('bcryptjs');
 
 class UserService {
-    // Check if user exists by email or username (used in signup)
+    // Check if user exists by email or username 
     async checkUserExists(email, username) {
         const query = 'SELECT * FROM users WHERE email = ? OR name = ?';
         return await queryDatabase(query, [email, username]);
     }
 
-    // Create a new user (used in signup)
+    // Create a new user 
     async createUser(username, email, hashedPassword) {
         const query = 'INSERT INTO users SET ?';
         return await queryDatabase(query, { name: username, email: email, password: hashedPassword });
     }
 
-    // Fetch user by email (used in login)
+    // Fetch user by email for login
     async getUserByEmail(email) {
         const query = 'SELECT * FROM users WHERE email = ?';
         const results = await queryDatabase(query, [email]);
         return results.length > 0 ? results[0] : null; // Return user or null if not found
     }
 
-    // Fetch user profile by user ID (optional for login redirection)
+    // Fetch user profile by user ID
     async getUserProfile(userId) {
         const query = 'SELECT * FROM profiles WHERE user_id = ?';
         return await queryDatabase(query, [userId]);

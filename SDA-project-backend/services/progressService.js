@@ -24,17 +24,16 @@ class ProgressService {
             LIMIT 1;
         `;
         
-        // Log to ensure we get a correct goal start date
+        // Log to ensure correct goal start date
         const goalStartResult = await db.queryDatabase(goalStartQuery, [userId]);
     
         if (!goalStartResult || goalStartResult.length === 0) {
             console.error('No active goal found for user:', userId);
-            return { total_steps: 0, total_calories: 0, total_water: 0 };  // or handle this case differently
+            return { total_steps: 0, total_calories: 0, total_water: 0 };  
         }
 
-        const goalStartDate = goalStartResult[0].goal_start_date;  // Only declare here once
+        const goalStartDate = goalStartResult[0].goal_start_date;  
 
-        // Now modify the main query to use the valid goalStartDate
         const query = `
             SELECT 
                 SUM(steps) AS total_steps, 

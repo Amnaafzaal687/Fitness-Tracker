@@ -1,7 +1,5 @@
-// workoutPlanService.js
-
 class WorkoutPlanService {
-    // Determines the suggested workout plan based on the user's fitness level and workout type
+    
     getSuggestedPlan(fitnessLevel, workoutType) {
         // Normalize values to lowercase
         fitnessLevel = fitnessLevel.toLowerCase();

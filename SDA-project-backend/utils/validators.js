@@ -5,7 +5,6 @@ exports.validateEmail = (email) =>{
 
 exports.validatePassword = (password) =>password.length>=6;
 
-// utils/validators.js
 exports.validateProfileData = ({ gender, age, height, weight }) => {
     if (!gender || !['male', 'female', 'other'].includes(gender.toLowerCase())) {
         return 'Invalid gender. Please select "male", "female", or "other".';

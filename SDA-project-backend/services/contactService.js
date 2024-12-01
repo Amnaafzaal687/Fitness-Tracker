@@ -2,7 +2,6 @@ const db = require('../db');
 
 // Contact Service
 class ContactService {
-    // Save contact query
     async saveContactQuery({ name, email, message }) {
         if (!name || !email || !message) {
             throw new Error('All fields are required.');
